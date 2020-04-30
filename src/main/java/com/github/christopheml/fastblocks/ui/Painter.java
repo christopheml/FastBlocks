@@ -32,9 +32,9 @@ public class Painter {
         Point piecePosition = piece.position();
         gc.setFill(Color.web(piece.shape().color));
 
-        for (Point blockPosition : piece.shape().blocks) {
-            int scaledX = (piecePosition.x + blockPosition.x) * blockSize;
-            int scaledY = (piecePosition.y + blockPosition.y) * blockSize;
+        for (Point blockPosition : piece.blocksPositions()) {
+            int scaledX = blockPosition.x * blockSize;
+            int scaledY = blockPosition.y * blockSize;
             gc.drawImage(block, scaledX, scaledY);
             gc.fillRect(scaledX, scaledY, blockSize, blockSize);
         }

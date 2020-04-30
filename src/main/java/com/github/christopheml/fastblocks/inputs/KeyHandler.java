@@ -35,5 +35,12 @@ public class KeyHandler implements EventHandler<KeyEvent> {
         return activeKeys.contains(KeyCode.DOWN);
     }
 
-}
+    public boolean isUpPressed() {
+        return activeKeys.contains(KeyCode.UP);
+    }
 
+    public void releaseUp() {
+        activeKeys.remove(KeyCode.UP);
+    }
+
+}

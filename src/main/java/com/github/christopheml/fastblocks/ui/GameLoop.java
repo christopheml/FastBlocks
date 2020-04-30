@@ -54,6 +54,10 @@ class GameLoop extends AnimationTimer {
         if (keyHandler.isDownPressed()) {
             game.attemptMoveDown();
         }
+        if (keyHandler.isUpPressed()) {
+            game.attemptRotateRight();
+            keyHandler.releaseUp();
+        }
     }
 
     private void paintFrame() {

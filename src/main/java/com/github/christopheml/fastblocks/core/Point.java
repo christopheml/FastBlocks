@@ -29,7 +29,10 @@ public class Point {
         return new Point(x + other.x, y + other.y);
     }
 
-    public static Point at(int x, int y) {
+    /**
+     * Shorthand factory method.
+     */
+    public static Point p(int x, int y) {
         return new Point(x, y);
     }
 

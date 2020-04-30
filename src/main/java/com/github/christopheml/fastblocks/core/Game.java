@@ -45,6 +45,10 @@ public class Game {
         return point.y < 0 || board[point.x][point.y] != null;
     }
 
+    public void attemptRotateRight() {
+        currentPiece.rotateRight();
+    }
+
     public void attemptMoveDown() {
 
         if (currentPiece.blocksPositions().stream()
