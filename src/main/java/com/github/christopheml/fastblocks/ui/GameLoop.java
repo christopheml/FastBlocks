@@ -13,15 +13,14 @@ class GameLoop extends AnimationTimer {
     private final Painter painter;
     private final KeyHandler keyHandler;
 
-    private long lastFallUpdate;
-    private long lastMoveUpdate;
+    private final LoopTimer inputTimer = new LoopTimer(50);
+    private final LoopTimer pieceGravityTimer = new LoopTimer(300);
+
 
     public GameLoop(Game game, Painter painter, KeyHandler keyHandler) {
         this.game = game;
         this.painter = painter;
         this.keyHandler = keyHandler;
-        lastFallUpdate = 0;
-        lastMoveUpdate = 0;
     }
 
     @Override
@@ -34,27 +33,9 @@ class GameLoop extends AnimationTimer {
     public void handle(long now) {
         switch (game.status()) {
             case STARTED: {
-                if (elapsedMs(now, lastMoveUpdate) >= 50) {
-                    if (keyHandler.isLeftPressed()) {
-                        game.attemptMoveLeft();
-                    } else if (keyHandler.isRightPressed()) {
-                        game.attemptMoveRight();
-                    }
-                    if (keyHandler.isDownPressed()) {
-                        game.attemptMoveDown();
-                    }
-                    lastMoveUpdate = now;
-                }
-
-                if (elapsedMs(now, lastFallUpdate) >= 300) {
-                    game.attemptMoveDown();
-                    lastFallUpdate = now;
-                }
-
-                painter.clearCanvas();
-                painter.drawBackground();
-                painter.drawBoard(game.board());
-                painter.drawPiece(game.currentPiece());
+                inputTimer.runOnInterval(now, this::handleInput);
+                pieceGravityTimer.runOnInterval(now, game::attemptMoveDown);
+                paintFrame();
                 break;
             }
             case LOST: {
@@ -64,7 +45,22 @@ class GameLoop extends AnimationTimer {
         }
     }
 
-    public long elapsedMs(long now, long then) {
-        return (now - then) / 1000000;
+    private void handleInput() {
+        if (keyHandler.isLeftPressed()) {
+            game.attemptMoveLeft();
+        } else if (keyHandler.isRightPressed()) {
+            game.attemptMoveRight();
+        }
+        if (keyHandler.isDownPressed()) {
+            game.attemptMoveDown();
+        }
     }
+
+    private void paintFrame() {
+        painter.clearCanvas();
+        painter.drawBackground();
+        painter.drawBoard(game.board());
+        painter.drawPiece(game.currentPiece());
+    }
+
 }
