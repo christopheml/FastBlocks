@@ -20,16 +20,16 @@ public class Painter {
 
     private final int blockSize;
 
-    private final Image block;
+    private final ImageCache imageCache = new ImageCache();
 
     public Painter(Canvas canvas, int blockSize) {
         this.canvas = canvas;
         this.blockSize = blockSize;
-        block = new Image(getClass().getResourceAsStream("/block.png"), blockSize, blockSize, true, false);
         gc = canvas.getGraphicsContext2D();
     }
 
     void drawPiece(Piece piece) {
+        var block = imageCache.load("/block.png", blockSize, blockSize);
         gc.setFill(Color.web(piece.shape().color));
 
         for (Point blockPosition : piece.blocksPositions()) {
@@ -55,16 +55,19 @@ public class Painter {
 
     public void drawBoard(Board board) {
         for (Block block : board.getBlocks()) {
-            drawBlock(block.position().x, block.position().y, block.color());
+            var image = imageCache.load(block.image(), blockSize, blockSize);
+            drawBlock(block.position().x, block.position().y, image, block.color());
         }
     }
 
-    private void drawBlock(int x, int y, String color) {
-        gc.setFill(Color.web(color));
+    private void drawBlock(int x, int y, Image image, String color) {
         int scaledX = x * blockSize;
         int scaledY = y * blockSize;
-        gc.drawImage(block, scaledX, scaledY);
-        gc.fillRect(scaledX, scaledY, blockSize, blockSize);
+        gc.drawImage(image, scaledX, scaledY);
+        if (!color.isEmpty()) {
+            gc.setFill(Color.web(color));
+            gc.fillRect(scaledX, scaledY, blockSize, blockSize);
+        }
     }
 
 }
