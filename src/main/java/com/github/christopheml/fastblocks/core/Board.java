@@ -1,5 +1,6 @@
 package com.github.christopheml.fastblocks.core;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -13,17 +14,23 @@ public class Board {
     public static final int COLUMNS = 12;
     public static final int LINES = 22;
 
-    private final Block[][] board = new Block[LINES][COLUMNS];
+    private final List<Block[]> board = new ArrayList<>();
+
+    public Board() {
+        for (int i = 0; i < LINES; ++i) {
+            board.add(new Block[COLUMNS]);
+        }
+    }
 
     public void lock(Piece piece) {
-        piece.blocksPositions().forEach(p -> board[p.y][p.x] = new DeadBlock(p, piece.shape().color));
+        piece.blocksPositions().forEach(p -> board.get(p.y)[p.x] = new DeadBlock(p, piece.shape().color));
     }
 
     public boolean isOccupied(Point p) {
         if (collidesLeftSide(p) || collidesRightSide(p) || p.y < 0 || p.y >= LINES) {
             return false;
         }
-        return board[p.y][p.x] != null;
+        return board.get(p.y)[p.x] != null;
     }
 
     boolean collidesVerticalTop(Point point) {
@@ -47,7 +54,7 @@ public class Board {
     }
 
     public List<Block> getBlocks() {
-        return Arrays.stream(board).flatMap(Arrays::stream).filter(Objects::nonNull).collect(Collectors.toList());
+        return board.stream().flatMap(Arrays::stream).filter(Objects::nonNull).collect(Collectors.toList());
     }
 
 }
