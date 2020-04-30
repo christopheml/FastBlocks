@@ -1,8 +1,8 @@
 package com.github.christopheml.fastblocks.ui;
 
+import com.github.christopheml.fastblocks.core.Board;
 import com.github.christopheml.fastblocks.core.Piece;
 import com.github.christopheml.fastblocks.core.Point;
-import com.github.christopheml.fastblocks.core.Shape;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -29,7 +29,6 @@ public class Painter {
     }
 
     void drawPiece(Piece piece) {
-        Point piecePosition = piece.position();
         gc.setFill(Color.web(piece.shape().color));
 
         for (Point blockPosition : piece.blocksPositions()) {
@@ -53,11 +52,12 @@ public class Painter {
         gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
     }
 
-    public void drawBoard(Shape[][] board) {
+    public void drawBoard(Board board) {
         for (int x = 0; x < 12; ++x) {
             for (int y = 0; y < 22; ++y) {
-                if (board[x][y] != null) {
-                    drawBlock(x, y, board[x][y].color);
+                Point p = Point.p(x, y);
+                if (board.isOccupied(p)) {
+                    drawBlock(x, y, board.getColor(p));
                 }
             }
         }

@@ -9,7 +9,7 @@ public class Game {
 
     private Piece currentPiece;
 
-    private final Shape[][] board = new Shape[12][22];
+    private final Board board = new Board();
 
     private Status status = Status.NOT_STARTED;
 
@@ -34,15 +34,15 @@ public class Game {
     }
 
     private boolean collidesLateral(Point point) {
-        return point.x < 0 || point.x > 11 || board[point.x][point.y] != null;
+        return point.x < 0 || point.x > 11 || board.isOccupied(point);
     }
 
     private boolean collidesVerticalBottom(Point point) {
-        return point.y > 21 || board[point.x][point.y] != null;
+        return point.y > 21 || board.isOccupied(point);
     }
 
     private boolean collidesVerticalTop(Point point) {
-        return point.y < 0 || board[point.x][point.y] != null;
+        return point.y < 0 || board.isOccupied(point);
     }
 
     public void attemptRotateRight() {
@@ -56,7 +56,7 @@ public class Game {
                 .noneMatch(this::collidesVerticalBottom)) {
             currentPiece.moveDown();
         } else {
-            lockPiece();
+            board.lock(currentPiece);
             spawnPiece();
 
             // if spawned piece hits anything upon spawning, game over
@@ -70,10 +70,6 @@ public class Game {
         status = Status.LOST;
     }
 
-    private void lockPiece() {
-        currentPiece.blocksPositions().forEach(p -> board[p.x][p.y] = currentPiece.shape());
-    }
-
     public Piece currentPiece() {
         return currentPiece;
     }
@@ -83,7 +79,7 @@ public class Game {
         spawnPiece();
     }
 
-    public Shape[][] board() {
+    public Board board() {
         return board;
     }
 
