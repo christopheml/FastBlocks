@@ -32,27 +32,36 @@ class GameLoop extends AnimationTimer {
 
     @Override
     public void handle(long now) {
-        if (elapsedMs(now, lastMoveUpdate) >= 50) {
-            if (keyHandler.isLeftPressed()) {
-                game.attemptMoveLeft();
-            } else if (keyHandler.isRightPressed()) {
-                game.attemptMoveRight();
-            }
-            if (keyHandler.isDownPressed()) {
-                game.attemptMoveDown();
-            }
-            lastMoveUpdate = now;
-        }
+        switch (game.status()) {
+            case STARTED: {
+                if (elapsedMs(now, lastMoveUpdate) >= 50) {
+                    if (keyHandler.isLeftPressed()) {
+                        game.attemptMoveLeft();
+                    } else if (keyHandler.isRightPressed()) {
+                        game.attemptMoveRight();
+                    }
+                    if (keyHandler.isDownPressed()) {
+                        game.attemptMoveDown();
+                    }
+                    lastMoveUpdate = now;
+                }
 
-        if (elapsedMs(now, lastFallUpdate) >= 300) {
-            game.attemptMoveDown();
-            lastFallUpdate = now;
-        }
+                if (elapsedMs(now, lastFallUpdate) >= 300) {
+                    game.attemptMoveDown();
+                    lastFallUpdate = now;
+                }
 
-        painter.clearCanvas();
-        painter.drawBackground();
-        painter.drawBoard(game.board());
-        painter.drawPiece(game.currentPiece());
+                painter.clearCanvas();
+                painter.drawBackground();
+                painter.drawBoard(game.board());
+                painter.drawPiece(game.currentPiece());
+                break;
+            }
+            case LOST: {
+                stop();
+                break;
+            }
+        }
     }
 
     public long elapsedMs(long now, long then) {
