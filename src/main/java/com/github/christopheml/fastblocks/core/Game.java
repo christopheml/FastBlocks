@@ -21,7 +21,7 @@ public class Game {
     public void attemptMoveLeft() {
         if (currentPiece.blocksPositions().stream()
                 .map(Point::left)
-                .noneMatch(this::collidesLateral)) {
+                .noneMatch(board::collidesLateral)) {
             currentPiece.moveLeft();
         }
     }
@@ -29,21 +29,9 @@ public class Game {
     public void attemptMoveRight() {
         if (currentPiece.blocksPositions().stream()
                 .map(Point::right)
-                .noneMatch(this::collidesLateral)) {
+                .noneMatch(board::collidesLateral)) {
             currentPiece.moveRight();
         }
-    }
-
-    private boolean collidesLateral(Point point) {
-        return point.x < 0 || point.x > 11 || board.isOccupied(point);
-    }
-
-    private boolean collidesVerticalBottom(Point point) {
-        return point.y > 21 || board.isOccupied(point);
-    }
-
-    private boolean collidesVerticalTop(Point point) {
-        return point.y < 0 || board.isOccupied(point);
     }
 
     public void attemptRotateRight() {
@@ -52,18 +40,18 @@ public class Game {
             // Collision with pieces, no rotation
             return;
         }
-        if (rotated.stream().anyMatch(p -> p.x < 0)) {
+        if (rotated.stream().anyMatch(board::collidesLeftSide)) {
             // Attempt wallkick on left wall
-            if (rotated.stream().map(Point::right).noneMatch(p -> p.x < 0 || board.isOccupied(p))) {
+            if (rotated.stream().map(Point::right).noneMatch(board::collidesLateral)) {
                 currentPiece.moveRight();
             } else {
                 // Wallkick not possible, no rotation
                 return;
             }
-        } else if (rotated.stream().anyMatch(p -> p.x > 11)) {
+        } else if (rotated.stream().anyMatch(board::collidesRightSide)) {
             // Attempt wallkick on right wall
-            if (rotated.stream().map(Point::left).noneMatch(p ->  p.x > 11 || board.isOccupied(p))) {
-                currentPiece.moveRight();
+            if (rotated.stream().map(Point::left).noneMatch(board::collidesLateral)) {
+                currentPiece.moveLeft();
             } else {
                 // Wallkick not possible, no rotation
                 return;
@@ -77,14 +65,14 @@ public class Game {
 
         if (currentPiece.blocksPositions().stream()
                 .map(Point::down)
-                .noneMatch(this::collidesVerticalBottom)) {
+                .noneMatch(board::collidesVerticalBottom)) {
             currentPiece.moveDown();
         } else {
             board.lock(currentPiece);
             spawnPiece();
 
             // if spawned piece hits anything upon spawning, game over
-            if (currentPiece.blocksPositions().stream().anyMatch(this::collidesVerticalTop)) {
+            if (currentPiece.blocksPositions().stream().anyMatch(board::collidesVerticalTop)) {
                 lose();
             }
         }
