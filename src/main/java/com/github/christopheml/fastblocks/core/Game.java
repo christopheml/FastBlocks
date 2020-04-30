@@ -1,5 +1,6 @@
 package com.github.christopheml.fastblocks.core;
 
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -46,6 +47,29 @@ public class Game {
     }
 
     public void attemptRotateRight() {
+        List<Point> rotated = currentPiece.tryRotation();
+        if (rotated.stream().anyMatch(board::isOccupied)) {
+            // Collision with pieces, no rotation
+            return;
+        }
+        if (rotated.stream().anyMatch(p -> p.x < 0)) {
+            // Attempt wallkick on left wall
+            if (rotated.stream().map(Point::right).noneMatch(p -> p.x < 0 || board.isOccupied(p))) {
+                currentPiece.moveRight();
+            } else {
+                // Wallkick not possible, no rotation
+                return;
+            }
+        } else if (rotated.stream().anyMatch(p -> p.x > 11)) {
+            // Attempt wallkick on right wall
+            if (rotated.stream().map(Point::left).noneMatch(p ->  p.x > 11 || board.isOccupied(p))) {
+                currentPiece.moveRight();
+            } else {
+                // Wallkick not possible, no rotation
+                return;
+            }
+        }
+
         currentPiece.rotateRight();
     }
 

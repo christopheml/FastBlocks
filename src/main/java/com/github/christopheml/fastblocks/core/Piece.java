@@ -37,7 +37,11 @@ public class Piece {
     }
 
     public void rotateRight() {
-        orientation = (orientation + 1) % shape.rotations().size();
+        orientation = nextOrientation();
+    }
+
+    private int nextOrientation() {
+        return (orientation + 1) % shape.rotations().size();
     }
 
     public void drop() {
@@ -54,6 +58,10 @@ public class Piece {
 
     public List<Point> blocksPositions() {
         return Arrays.stream(shape.rotations().get(orientation)).map(p -> p.add(position())).collect(Collectors.toList());
+    }
+
+    public List<Point> tryRotation() {
+        return Arrays.stream(shape.rotations().get(nextOrientation())).map(p -> p.add(position())).collect(Collectors.toList());
     }
 
 }
