@@ -8,11 +8,11 @@ public class Board {
     public static final int COLUMNS = 12;
     public static final int LINES = 22;
 
-    private final Shape[][] board = new Shape[COLUMNS][LINES];
+    private final Block[][] board = new Block[COLUMNS][LINES];
 
 
     public void lock(Piece piece) {
-        piece.blocksPositions().forEach(p -> board[p.x][p.y] = piece.shape());
+        piece.blocksPositions().forEach(p -> board[p.x][p.y] = new DeadBlock(p, piece.shape().color));
     }
 
     public boolean isOccupied(Point p) {
@@ -23,7 +23,7 @@ public class Board {
     }
 
     public String getColor(Point p) {
-        return board[p.x][p.y].color;
+        return board[p.x][p.y].color();
     }
 
     boolean collidesVerticalTop(Point point) {
