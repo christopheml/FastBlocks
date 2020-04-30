@@ -24,7 +24,7 @@ public enum Shape {
     T("#469D3480", asList(
             new Point[]{p(1, 0), p(0, 1), p(1, 1), p(2, 1)},
             new Point[]{p(0, 0), p(0, 1), p(1, 1), p(0, 2)},
-            new Point[]{p(0, 0), p(0, 1), p(0, 2), p(1, 1)},
+            new Point[]{p(0, 0), p(1, 0), p(2, 0), p(1, 1)},
             new Point[]{p(1, 0), p(0, 1), p(1, 1), p(1, 2)}
     )),
     S("5F2BCF80", asList(
