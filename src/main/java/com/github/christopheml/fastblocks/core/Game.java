@@ -15,7 +15,7 @@ public class Game {
     private Status status = Status.NOT_STARTED;
 
     private void spawnPiece() {
-        currentPiece = new Piece(Shape.random(), new Random().nextInt(10), 0);
+        currentPiece = new Piece(Shape.random(), new Random().nextInt(5) + 4, 0);
     }
 
     public void attemptMoveLeft() {
