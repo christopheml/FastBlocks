@@ -1,5 +1,6 @@
 package com.github.christopheml.fastblocks.ui;
 
+import com.github.christopheml.fastblocks.core.Block;
 import com.github.christopheml.fastblocks.core.Board;
 import com.github.christopheml.fastblocks.core.Piece;
 import com.github.christopheml.fastblocks.core.Point;
@@ -53,13 +54,8 @@ public class Painter {
     }
 
     public void drawBoard(Board board) {
-        for (int x = 0; x < 12; ++x) {
-            for (int y = 0; y < 22; ++y) {
-                Point p = Point.p(x, y);
-                if (board.isOccupied(p)) {
-                    drawBlock(x, y, board.getColor(p));
-                }
-            }
+        for (Block block : board.getBlocks()) {
+            drawBlock(block.position().x, block.position().y, block.color());
         }
     }
 

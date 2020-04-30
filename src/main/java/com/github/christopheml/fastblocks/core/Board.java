@@ -1,5 +1,10 @@
 package com.github.christopheml.fastblocks.core;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
 /**
  * Represents the content of the board.
  */
@@ -22,10 +27,6 @@ public class Board {
         return board[p.x][p.y] != null;
     }
 
-    public String getColor(Point p) {
-        return board[p.x][p.y].color();
-    }
-
     boolean collidesVerticalTop(Point point) {
         return point.y < 0 || isOccupied(point);
     }
@@ -46,5 +47,8 @@ public class Board {
         return point.x < 0;
     }
 
+    public List<Block> getBlocks() {
+        return Arrays.stream(board).flatMap(Arrays::stream).filter(Objects::nonNull).collect(Collectors.toList());
+    }
 
 }
