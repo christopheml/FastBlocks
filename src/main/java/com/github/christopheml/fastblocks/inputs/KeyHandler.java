@@ -18,8 +18,6 @@ public class KeyHandler implements EventHandler<KeyEvent> {
     public void handle(KeyEvent event) {
         if (event.getEventType() == KeyEvent.KEY_PRESSED) {
             activeKeys.add(event.getCode());
-        } else {
-            activeKeys.remove(event.getCode());
         }
     }
 
@@ -37,6 +35,14 @@ public class KeyHandler implements EventHandler<KeyEvent> {
 
     public boolean isUpPressed() {
         return activeKeys.contains(KeyCode.UP);
+    }
+
+    public boolean isSpacePressed() {
+        return activeKeys.contains(KeyCode.SPACE);
+    }
+
+    public void flush() {
+        activeKeys.clear();
     }
 
     public void releaseUp() {

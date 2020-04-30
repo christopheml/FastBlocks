@@ -13,7 +13,7 @@ class GameLoop extends AnimationTimer {
     private final Painter painter;
     private final KeyHandler keyHandler;
 
-    private final LoopTimer inputTimer = new LoopTimer(50);
+    private final LoopTimer inputTimer = new LoopTimer(30);
     private final LoopTimer pieceGravityTimer = new LoopTimer(300);
 
 
@@ -46,6 +46,9 @@ class GameLoop extends AnimationTimer {
     }
 
     private void handleInput() {
+        if (keyHandler.isSpacePressed()) {
+            game.attemptDrop();
+        }
         if (keyHandler.isLeftPressed()) {
             game.attemptMoveLeft();
         } else if (keyHandler.isRightPressed()) {
@@ -56,8 +59,8 @@ class GameLoop extends AnimationTimer {
         }
         if (keyHandler.isUpPressed()) {
             game.attemptRotateRight();
-            keyHandler.releaseUp();
         }
+        keyHandler.flush();
     }
 
     private void paintFrame() {

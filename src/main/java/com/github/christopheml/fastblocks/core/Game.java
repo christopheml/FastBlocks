@@ -62,7 +62,6 @@ public class Game {
     }
 
     public void attemptMoveDown() {
-
         if (currentPiece.blocksPositions().stream()
                 .map(Point::down)
                 .noneMatch(board::collidesVerticalBottom)) {
@@ -97,6 +96,15 @@ public class Game {
 
     public Status status() {
         return status;
+    }
+
+    public void attemptDrop() {
+        while (currentPiece.blocksPositions().stream()
+                .map(Point::down)
+                .noneMatch(board::collidesVerticalBottom)) {
+            currentPiece.moveDown();
+        }
+        attemptMoveDown();
     }
 
     public enum Status {
