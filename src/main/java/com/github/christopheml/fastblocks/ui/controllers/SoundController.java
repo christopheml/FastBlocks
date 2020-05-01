@@ -4,8 +4,10 @@ import com.github.christopheml.fastblocks.sound.SoundEffect;
 import com.github.christopheml.fastblocks.sound.SoundEffectPlayer;
 import com.github.christopheml.fastblocks.ui.events.board.BoardEventListener;
 import com.github.christopheml.fastblocks.ui.events.board.LinesClearedEvent;
+import com.github.christopheml.fastblocks.ui.events.piece.PieceDroppedEvent;
+import com.github.christopheml.fastblocks.ui.events.piece.PieceEventListener;
 
-public class SoundController implements BoardEventListener {
+public class SoundController implements BoardEventListener, PieceEventListener {
 
     private final SoundEffectPlayer player;
 
@@ -25,6 +27,11 @@ public class SoundController implements BoardEventListener {
             case 4:
                 player.play(SoundEffect.FOUR_LINES);
         }
+    }
+
+    @Override
+    public void onPieceDropped(PieceDroppedEvent event) {
+        player.play(SoundEffect.PIECE_DROP);
     }
 
 }

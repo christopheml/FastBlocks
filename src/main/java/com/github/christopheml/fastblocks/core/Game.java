@@ -4,6 +4,7 @@ import com.github.christopheml.fastblocks.sound.SoundEffect;
 import com.github.christopheml.fastblocks.sound.SoundEffectPlayer;
 import com.github.christopheml.fastblocks.ui.events.GameEvents;
 import com.github.christopheml.fastblocks.ui.events.board.LinesClearedEvent;
+import com.github.christopheml.fastblocks.ui.events.piece.PieceDroppedEvent;
 
 import java.util.List;
 import java.util.Random;
@@ -13,8 +14,6 @@ import java.util.Random;
  */
 public class Game {
 
-    // FIXME: move this away with an event-based system
-    private final SoundEffectPlayer soundEffectPlayer = new SoundEffectPlayer();
     private final GameEvents events;
 
     private Piece currentPiece;
@@ -122,7 +121,7 @@ public class Game {
             currentPiece.moveDown();
         }
         attemptMoveDown();
-        soundEffectPlayer.play(SoundEffect.PIECE_DROP);
+        events.fireEvent(new PieceDroppedEvent());
     }
 
     public void clearLines() {
