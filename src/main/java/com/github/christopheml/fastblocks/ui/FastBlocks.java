@@ -9,6 +9,7 @@ import com.github.christopheml.fastblocks.ui.controllers.MainUiController;
 import com.github.christopheml.fastblocks.ui.controllers.SoundController;
 import com.github.christopheml.fastblocks.ui.events.GameEvents;
 import com.github.christopheml.fastblocks.ui.events.board.LinesClearedEvent;
+import com.github.christopheml.fastblocks.ui.events.game.GameStartEvent;
 import com.github.christopheml.fastblocks.ui.events.piece.PieceDroppedEvent;
 import com.github.christopheml.fastblocks.ui.events.piece.PieceRotatedEvent;
 import javafx.animation.AnimationTimer;
@@ -47,6 +48,7 @@ public class FastBlocks extends Application {
         // Controllers
         LineCountController lineCountController = new LineCountController(scene);
         events.registerBoardEvent(LinesClearedEvent.class, lineCountController);
+        events.registerGameEvent(GameStartEvent.class, lineCountController);
 
         SoundController soundController = new SoundController(soundEffectPlayer);
         events.registerBoardEvent(LinesClearedEvent.class, soundController);

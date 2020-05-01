@@ -2,10 +2,13 @@ package com.github.christopheml.fastblocks.ui.controllers;
 
 import com.github.christopheml.fastblocks.ui.events.board.BoardEventListener;
 import com.github.christopheml.fastblocks.ui.events.board.LinesClearedEvent;
+import com.github.christopheml.fastblocks.ui.events.game.GameEventListener;
+import com.github.christopheml.fastblocks.ui.events.game.GameStartEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 
-public class LineCountController implements BoardEventListener {
+// FIXME Use a property binding to update the label automatically
+public class LineCountController implements BoardEventListener, GameEventListener {
 
     private final Label label;
 
@@ -19,6 +22,12 @@ public class LineCountController implements BoardEventListener {
     public void onLinesCleared(LinesClearedEvent event) {
         this.lineCount += event.lineCount;
         label.setText(String.valueOf(this.lineCount));
+    }
+
+    @Override
+    public void onGameStarted(GameStartEvent event) {
+        this.lineCount = 0;
+        label.setText("0");
     }
 
 }

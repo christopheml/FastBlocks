@@ -4,6 +4,7 @@ import com.github.christopheml.fastblocks.sound.SoundEffect;
 import com.github.christopheml.fastblocks.sound.SoundEffectPlayer;
 import com.github.christopheml.fastblocks.ui.events.GameEvents;
 import com.github.christopheml.fastblocks.ui.events.board.LinesClearedEvent;
+import com.github.christopheml.fastblocks.ui.events.game.GameStartEvent;
 import com.github.christopheml.fastblocks.ui.events.piece.PieceDroppedEvent;
 import com.github.christopheml.fastblocks.ui.events.piece.PieceRotatedEvent;
 
@@ -111,6 +112,7 @@ public class Game {
         board.clear();
         status = Status.STARTED;
         spawnPiece();
+        events.fireEvent(new GameStartEvent());
     }
 
     public Board board() {
