@@ -57,10 +57,12 @@ public class Board {
         return board.stream().flatMap(Arrays::stream).filter(Objects::nonNull).collect(Collectors.toList());
     }
 
-    public void clearLines(Game game) {
+    public int clearLines(Game game) {
         processDestroyedBlocks(game);
 
         board.removeIf(this::isFull);
+        int removed = LINES - board.size();
+
         while (board.size() < LINES) {
             board.add(0, new Block[COLUMNS]);
         }
@@ -72,6 +74,8 @@ public class Board {
                 }
             }
         }
+
+        return removed;
     }
 
     private void processDestroyedBlocks(Game game) {

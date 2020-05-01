@@ -1,5 +1,8 @@
 package com.github.christopheml.fastblocks.core;
 
+import com.github.christopheml.fastblocks.sound.SoundEffect;
+import com.github.christopheml.fastblocks.sound.SoundEffectPlayer;
+
 import java.util.List;
 import java.util.Random;
 
@@ -7,6 +10,9 @@ import java.util.Random;
  * Main game logic.
  */
 public class Game {
+
+    // FIXME: move this away with an event-based system
+    private SoundEffectPlayer soundEffectPlayer = new SoundEffectPlayer();
 
     private Piece currentPiece;
 
@@ -109,10 +115,18 @@ public class Game {
             currentPiece.moveDown();
         }
         attemptMoveDown();
+        soundEffectPlayer.play(SoundEffect.PIECE_DROP);
     }
 
     public void clearLines() {
-        board.clearLines(this);
+        int removedLines = board.clearLines(this);
+        if (removedLines == 2) {
+            soundEffectPlayer.play(SoundEffect.TWO_LINES);
+        } else if (removedLines == 3) {
+            soundEffectPlayer.play(SoundEffect.THREE_LINES);
+        } else if (removedLines == 4) {
+            soundEffectPlayer.play(SoundEffect.FOUR_LINES);
+        }
     }
 
     public enum Status {
