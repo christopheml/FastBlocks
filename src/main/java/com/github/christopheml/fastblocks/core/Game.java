@@ -68,6 +68,7 @@ public class Game {
             currentPiece.moveDown();
         } else {
             board.lock(currentPiece);
+            clearLines();
             spawnPiece();
 
             // if spawned piece hits anything upon spawning, game over
@@ -105,6 +106,10 @@ public class Game {
             currentPiece.moveDown();
         }
         attemptMoveDown();
+    }
+
+    public void clearLines() {
+        board.clearLines(this);
     }
 
     public enum Status {

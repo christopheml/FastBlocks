@@ -57,4 +57,30 @@ public class Board {
         return board.stream().flatMap(Arrays::stream).filter(Objects::nonNull).collect(Collectors.toList());
     }
 
+    public void clearLines(Game game) {
+        processDestroyedBlocks(game);
+
+        board.removeIf(this::isFull);
+        while (board.size() < LINES) {
+            board.add(0, new Block[COLUMNS]);
+        }
+        for (int line = 0; line < LINES; ++line) {
+            for (int i = 0; i < COLUMNS; ++i) {
+                Block block = board.get(line)[i];
+                if (block != null) {
+                    block.updateLine(line);
+                }
+            }
+        }
+    }
+
+    private void processDestroyedBlocks(Game game) {
+        List<Block> toDestroy = board.stream().filter(this::isFull).flatMap(Arrays::stream).collect(Collectors.toList());
+        toDestroy.forEach(block -> block.destroy(game));
+    }
+
+    private boolean isFull(Block[] line) {
+        return Arrays.stream(line).noneMatch(Objects::isNull);
+    }
+
 }

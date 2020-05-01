@@ -10,4 +10,6 @@ public interface Block {
 
     void destroy(Game game);
 
+    void updateLine(int line);
+
 }
