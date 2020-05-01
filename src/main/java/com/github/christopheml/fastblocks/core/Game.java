@@ -2,6 +2,8 @@ package com.github.christopheml.fastblocks.core;
 
 import com.github.christopheml.fastblocks.sound.SoundEffect;
 import com.github.christopheml.fastblocks.sound.SoundEffectPlayer;
+import com.github.christopheml.fastblocks.ui.events.GameEvents;
+import com.github.christopheml.fastblocks.ui.events.LineClearEvent;
 
 import java.util.List;
 import java.util.Random;
@@ -12,13 +14,18 @@ import java.util.Random;
 public class Game {
 
     // FIXME: move this away with an event-based system
-    private SoundEffectPlayer soundEffectPlayer = new SoundEffectPlayer();
+    private final SoundEffectPlayer soundEffectPlayer = new SoundEffectPlayer();
+    private final GameEvents events;
 
     private Piece currentPiece;
 
     private final Board board = new Board();
 
     private Status status = Status.NOT_STARTED;
+
+    public Game(GameEvents events) {
+        this.events = events;
+    }
 
     private void spawnPiece() {
         currentPiece = new Piece(Shape.random(), new Random().nextInt(5) + 4, 0);
@@ -120,6 +127,7 @@ public class Game {
 
     public void clearLines() {
         int removedLines = board.clearLines(this);
+        events.fireEvent(new LineClearEvent(removedLines));
         if (removedLines == 2) {
             soundEffectPlayer.play(SoundEffect.TWO_LINES);
         } else if (removedLines == 3) {
