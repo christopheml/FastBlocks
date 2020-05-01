@@ -1,6 +1,8 @@
 package com.github.christopheml.fastblocks.ui.events.game;
 
-public interface GameEventListener {
+import com.github.christopheml.fastblocks.ui.events.EventListener;
+
+public interface GameEventListener extends EventListener {
 
     void onGameStarted(GameStartEvent event);
 

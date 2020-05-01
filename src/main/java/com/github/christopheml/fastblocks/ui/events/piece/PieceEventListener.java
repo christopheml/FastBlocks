@@ -1,6 +1,8 @@
 package com.github.christopheml.fastblocks.ui.events.piece;
 
-public interface PieceEventListener {
+import com.github.christopheml.fastblocks.ui.events.EventListener;
+
+public interface PieceEventListener extends EventListener {
 
     void onPieceDropped(PieceDroppedEvent event);
 

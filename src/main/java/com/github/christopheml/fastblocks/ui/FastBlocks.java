@@ -5,7 +5,6 @@ import com.github.christopheml.fastblocks.di.DependencyInjectionControllerFactor
 import com.github.christopheml.fastblocks.inputs.KeyHandler;
 import com.github.christopheml.fastblocks.sound.SoundEffectPlayer;
 import com.github.christopheml.fastblocks.ui.controllers.LineCountController;
-import com.github.christopheml.fastblocks.ui.controllers.MainUiController;
 import com.github.christopheml.fastblocks.ui.controllers.SoundController;
 import com.github.christopheml.fastblocks.ui.events.GameEvents;
 import com.github.christopheml.fastblocks.ui.events.board.LinesClearedEvent;
@@ -20,9 +19,6 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.util.Callback;
-
-import java.lang.reflect.Constructor;
 
 public class FastBlocks extends Application {
 
@@ -47,13 +43,13 @@ public class FastBlocks extends Application {
 
         // Controllers
         LineCountController lineCountController = new LineCountController(scene);
-        events.registerBoardEvent(LinesClearedEvent.class, lineCountController);
-        events.registerGameEvent(GameStartEvent.class, lineCountController);
+        events.registerEvent(LinesClearedEvent.class, lineCountController);
+        events.registerEvent(GameStartEvent.class, lineCountController);
 
         SoundController soundController = new SoundController(soundEffectPlayer);
-        events.registerBoardEvent(LinesClearedEvent.class, soundController);
-        events.registerPieceEvent(PieceDroppedEvent.class, soundController);
-        events.registerPieceEvent(PieceRotatedEvent.class, soundController);
+        events.registerEvent(LinesClearedEvent.class, soundController);
+        events.registerEvent(PieceDroppedEvent.class, soundController);
+        events.registerEvent(PieceRotatedEvent.class, soundController);
 
         scene.setOnKeyPressed(keyHandler);
         scene.setOnKeyReleased(keyHandler);
