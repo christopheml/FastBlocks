@@ -1,12 +1,11 @@
 package com.github.christopheml.fastblocks.ui.controllers;
 
-import com.github.christopheml.fastblocks.ui.events.GameEvent;
-import com.github.christopheml.fastblocks.ui.events.GameEventHandler;
-import com.github.christopheml.fastblocks.ui.events.LineClearEvent;
+import com.github.christopheml.fastblocks.ui.events.board.BoardEventListener;
+import com.github.christopheml.fastblocks.ui.events.board.LinesClearedEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 
-public class LineCountController implements GameEventHandler {
+public class LineCountController implements BoardEventListener {
 
     private final Label label;
 
@@ -17,8 +16,8 @@ public class LineCountController implements GameEventHandler {
     }
 
     @Override
-    public void process(GameEvent event) {
-        this.lineCount = lineCount + ((LineClearEvent) event).lineCount;
+    public void onLinesCleared(LinesClearedEvent event) {
+        this.lineCount += event.lineCount;
         label.setText(String.valueOf(this.lineCount));
     }
 

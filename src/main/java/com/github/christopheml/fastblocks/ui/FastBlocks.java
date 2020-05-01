@@ -3,8 +3,8 @@ package com.github.christopheml.fastblocks.ui;
 import com.github.christopheml.fastblocks.core.Game;
 import com.github.christopheml.fastblocks.inputs.KeyHandler;
 import com.github.christopheml.fastblocks.ui.controllers.LineCountController;
-import com.github.christopheml.fastblocks.ui.events.GameEventHandler;
 import com.github.christopheml.fastblocks.ui.events.GameEvents;
+import com.github.christopheml.fastblocks.ui.events.board.LinesClearedEvent;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -32,7 +32,7 @@ public class FastBlocks extends Application {
 
         // Controllers
         LineCountController lineCountController = new LineCountController(scene);
-        events.onLineClear(lineCountController);
+        events.registerBoardEvent(LinesClearedEvent.class, lineCountController);
 
         scene.setOnKeyPressed(keyHandler);
         scene.setOnKeyReleased(keyHandler);

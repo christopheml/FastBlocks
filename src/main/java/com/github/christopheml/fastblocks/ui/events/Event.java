@@ -1,4 +1,4 @@
 package com.github.christopheml.fastblocks.ui.events;
 
-public interface GameEvent {
+public interface Event {
 }

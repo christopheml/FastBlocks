@@ -3,7 +3,7 @@ package com.github.christopheml.fastblocks.core;
 import com.github.christopheml.fastblocks.sound.SoundEffect;
 import com.github.christopheml.fastblocks.sound.SoundEffectPlayer;
 import com.github.christopheml.fastblocks.ui.events.GameEvents;
-import com.github.christopheml.fastblocks.ui.events.LineClearEvent;
+import com.github.christopheml.fastblocks.ui.events.board.LinesClearedEvent;
 
 import java.util.List;
 import java.util.Random;
@@ -127,7 +127,7 @@ public class Game {
 
     public void clearLines() {
         int removedLines = board.clearLines(this);
-        events.fireEvent(new LineClearEvent(removedLines));
+        events.fireEvent(new LinesClearedEvent(removedLines));
         if (removedLines == 2) {
             soundEffectPlayer.play(SoundEffect.TWO_LINES);
         } else if (removedLines == 3) {
