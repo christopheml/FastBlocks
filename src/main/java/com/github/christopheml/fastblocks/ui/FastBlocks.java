@@ -54,4 +54,8 @@ public class FastBlocks extends Application {
         gameLoop.start();
     }
 
+    public static void main(String[] args) {
+        launch(args);
+    }
+
 }
