@@ -36,15 +36,11 @@ public class FastBlocks extends Application {
 
         Scene scene = new Scene(root, Color.WHITESMOKE);
 
-        var canvas = (Canvas) scene.lookup("#gameCanvas");
-        Painter painter = new Painter(canvas, 24);
-
-        SoundEffectPlayer soundEffectPlayer = new SoundEffectPlayer();
-
         // Controllers
         LineCountController lineCountController = new LineCountController(scene);
         events.registerListener(lineCountController, LinesClearedEvent.class, GameStartEvent.class);
 
+        SoundEffectPlayer soundEffectPlayer = new SoundEffectPlayer();
         SoundController soundController = new SoundController(soundEffectPlayer);
         events.registerListener(soundController, LinesClearedEvent.class, PieceDroppedEvent.class, PieceRotatedEvent.class);
 
@@ -54,6 +50,9 @@ public class FastBlocks extends Application {
         stage.setTitle("FastBlocks");
         stage.setScene(scene);
         stage.show();
+
+        var canvas = (Canvas) scene.lookup("#gameCanvas");
+        Painter painter = new Painter(canvas, 24);
 
         AnimationTimer gameLoop = new GameLoop(game, painter, keyHandler);
         gameLoop.start();
