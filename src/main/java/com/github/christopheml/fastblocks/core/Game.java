@@ -128,13 +128,6 @@ public class Game {
     public void clearLines() {
         int removedLines = board.clearLines(this);
         events.fireEvent(new LinesClearedEvent(removedLines));
-        if (removedLines == 2) {
-            soundEffectPlayer.play(SoundEffect.TWO_LINES);
-        } else if (removedLines == 3) {
-            soundEffectPlayer.play(SoundEffect.THREE_LINES);
-        } else if (removedLines == 4) {
-            soundEffectPlayer.play(SoundEffect.FOUR_LINES);
-        }
     }
 
     public enum Status {

@@ -2,7 +2,9 @@ package com.github.christopheml.fastblocks.ui;
 
 import com.github.christopheml.fastblocks.core.Game;
 import com.github.christopheml.fastblocks.inputs.KeyHandler;
+import com.github.christopheml.fastblocks.sound.SoundEffectPlayer;
 import com.github.christopheml.fastblocks.ui.controllers.LineCountController;
+import com.github.christopheml.fastblocks.ui.controllers.SoundController;
 import com.github.christopheml.fastblocks.ui.events.GameEvents;
 import com.github.christopheml.fastblocks.ui.events.board.LinesClearedEvent;
 import javafx.animation.AnimationTimer;
@@ -30,9 +32,14 @@ public class FastBlocks extends Application {
         var game = new Game(events);
         // TODO: handle game configuration here
 
+        SoundEffectPlayer soundEffectPlayer = new SoundEffectPlayer();
+
         // Controllers
         LineCountController lineCountController = new LineCountController(scene);
         events.registerBoardEvent(LinesClearedEvent.class, lineCountController);
+
+        SoundController soundController = new SoundController(soundEffectPlayer);
+        events.registerBoardEvent(LinesClearedEvent.class, soundController);
 
         scene.setOnKeyPressed(keyHandler);
         scene.setOnKeyReleased(keyHandler);
