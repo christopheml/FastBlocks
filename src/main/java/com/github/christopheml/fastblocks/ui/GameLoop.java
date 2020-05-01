@@ -2,6 +2,7 @@ package com.github.christopheml.fastblocks.ui;
 
 import com.github.christopheml.fastblocks.core.Game;
 import com.github.christopheml.fastblocks.inputs.KeyHandler;
+import com.github.christopheml.fastblocks.ui.animations.BoardFiller;
 import javafx.animation.AnimationTimer;
 
 /**
@@ -15,7 +16,7 @@ class GameLoop extends AnimationTimer {
 
     private final LoopTimer inputTimer = new LoopTimer(30);
     private final LoopTimer pieceGravityTimer = new LoopTimer(300);
-
+    private final LoopTimer fillBoardTimer = new LoopTimer(80);
 
     public GameLoop(Game game, Painter painter, KeyHandler keyHandler) {
         this.game = game;
@@ -39,7 +40,8 @@ class GameLoop extends AnimationTimer {
                 break;
             }
             case LOST: {
-                stop();
+                fillBoardTimer.runOnInterval(now, () -> BoardFiller.fillBlocks(game.board(), 10));
+                paintBoard();
                 break;
             }
         }
@@ -64,10 +66,14 @@ class GameLoop extends AnimationTimer {
     }
 
     private void paintFrame() {
+        paintBoard();
+        painter.drawPiece(game.currentPiece());
+    }
+
+    private void paintBoard() {
         painter.clearCanvas();
         painter.drawBackground();
         painter.drawBoard(game.board());
-        painter.drawPiece(game.currentPiece());
     }
 
 }

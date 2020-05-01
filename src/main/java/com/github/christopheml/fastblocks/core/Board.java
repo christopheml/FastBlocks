@@ -23,7 +23,13 @@ public class Board {
     }
 
     public void lock(Piece piece) {
-        piece.blocksPositions().forEach(p -> board.get(p.y)[p.x] = new DeadBlock(p, piece.shape().color));
+        piece.blocksPositions().forEach(p -> fillBlock(p, piece.shape().color));
+    }
+
+    public void fillBlock(Point position, String color) {
+        if (!isOccupied(position)) {
+            board.get(position.y)[position.x] = new DeadBlock(position, color);
+        }
     }
 
     public boolean isOccupied(Point p) {
