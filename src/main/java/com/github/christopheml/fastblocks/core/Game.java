@@ -5,6 +5,7 @@ import com.github.christopheml.fastblocks.sound.SoundEffectPlayer;
 import com.github.christopheml.fastblocks.ui.events.GameEvents;
 import com.github.christopheml.fastblocks.ui.events.board.LinesClearedEvent;
 import com.github.christopheml.fastblocks.ui.events.piece.PieceDroppedEvent;
+import com.github.christopheml.fastblocks.ui.events.piece.PieceRotatedEvent;
 
 import java.util.List;
 import java.util.Random;
@@ -59,21 +60,26 @@ public class Game {
             attemptRightWallKick(rotated);
             return;
         }
-        currentPiece.rotateRight();
+        rotateRight();
     }
 
     private void attemptRightWallKick(List<Point> rotated) {
         if (rotated.stream().map(Point::left).noneMatch(board::collidesLateral)) {
             currentPiece.moveLeft();
-            currentPiece.rotateRight();
+            rotateRight();
         }
     }
 
     private void attemptLeftWallKick(List<Point> rotated) {
         if (rotated.stream().map(Point::right).noneMatch(board::collidesLateral)) {
             currentPiece.moveRight();
-            currentPiece.rotateRight();
+            rotateRight();
         }
+    }
+
+    private void rotateRight() {
+        currentPiece.rotateRight();
+        events.fireEvent(new PieceRotatedEvent());
     }
 
     public void attemptMoveDown() {

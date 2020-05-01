@@ -6,6 +6,7 @@ import com.github.christopheml.fastblocks.ui.events.board.LinesClearedEvent;
 import com.github.christopheml.fastblocks.ui.events.piece.PieceDroppedEvent;
 import com.github.christopheml.fastblocks.ui.events.piece.PieceEvent;
 import com.github.christopheml.fastblocks.ui.events.piece.PieceEventListener;
+import com.github.christopheml.fastblocks.ui.events.piece.PieceRotatedEvent;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -37,6 +38,14 @@ public class GameEvents {
         if (pieceEventHandlers.containsKey(event.getClass())) {
             pieceEventHandlers.get(event.getClass()).forEach(listener -> {
                 listener.onPieceDropped(event);
+            });
+        }
+    }
+
+    public void fireEvent(PieceRotatedEvent event) {
+        if (pieceEventHandlers.containsKey(event.getClass())) {
+            pieceEventHandlers.get(event.getClass()).forEach(listener -> {
+                listener.onPieceRotated(event);
             });
         }
     }

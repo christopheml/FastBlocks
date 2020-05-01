@@ -4,4 +4,6 @@ public interface PieceEventListener {
 
     void onPieceDropped(PieceDroppedEvent event);
 
+    void onPieceRotated(PieceRotatedEvent event);
+
 }

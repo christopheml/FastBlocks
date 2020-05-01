@@ -18,4 +18,8 @@ public class SoundEffectPlayer {
         effects.get(effect).play();
     }
 
+    public void play(SoundEffect effect, double volume) {
+        effects.get(effect).play(volume);
+    }
+
 }
