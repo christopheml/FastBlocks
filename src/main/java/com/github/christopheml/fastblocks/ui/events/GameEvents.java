@@ -13,6 +13,13 @@ public class GameEvents {
         eventHandlers.computeIfAbsent(eventClass, k -> new HashSet<>()).add(listener);
     }
 
+    @SafeVarargs
+    public final void registerListener(EventListener listener, Class<? extends Event>... eventClasses) {
+        for (Class<? extends Event> eventClass : eventClasses) {
+            registerEvent(eventClass, listener);
+        }
+    }
+
     public void fireEvent(Event event) {
         if (eventHandlers.containsKey(event.getClass())) {
             eventHandlers.get(event.getClass()).forEach(event::propagateTo);

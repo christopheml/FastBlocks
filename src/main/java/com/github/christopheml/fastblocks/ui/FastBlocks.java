@@ -43,13 +43,10 @@ public class FastBlocks extends Application {
 
         // Controllers
         LineCountController lineCountController = new LineCountController(scene);
-        events.registerEvent(LinesClearedEvent.class, lineCountController);
-        events.registerEvent(GameStartEvent.class, lineCountController);
+        events.registerListener(lineCountController, LinesClearedEvent.class, GameStartEvent.class);
 
         SoundController soundController = new SoundController(soundEffectPlayer);
-        events.registerEvent(LinesClearedEvent.class, soundController);
-        events.registerEvent(PieceDroppedEvent.class, soundController);
-        events.registerEvent(PieceRotatedEvent.class, soundController);
+        events.registerListener(soundController, LinesClearedEvent.class, PieceDroppedEvent.class, PieceRotatedEvent.class);
 
         scene.setOnKeyPressed(keyHandler);
         scene.setOnKeyReleased(keyHandler);
