@@ -11,14 +11,15 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.github.christopheml.fastblocks.ui.controllers.MainUiController">
     <children>
         <MenuBar VBox.vgrow="NEVER">
             <menus>
                 <Menu mnemonicParsing="false" text="Game">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="New Game" />
-                        <MenuItem mnemonicParsing="false" text="Quit" />
+                        <MenuItem onAction="#newGameAction" mnemonicParsing="false" text="New Game" />
+                        <MenuItem onAction="#quitAction" mnemonicParsing="false" text="Quit" />
                     </items>
                 </Menu>
             </menus>

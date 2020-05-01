@@ -87,4 +87,10 @@ public class Board {
         return Arrays.stream(line).noneMatch(Objects::isNull);
     }
 
+    public void clear() {
+        board.forEach(line -> {
+            Arrays.fill(line, null);
+        });
+    }
+
 }

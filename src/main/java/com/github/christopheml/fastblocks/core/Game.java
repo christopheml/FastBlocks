@@ -108,6 +108,7 @@ public class Game {
     }
 
     public void start() {
+        board.clear();
         status = Status.STARTED;
         spawnPiece();
     }
