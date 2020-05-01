@@ -41,24 +41,27 @@ public class Game {
             return;
         }
         if (rotated.stream().anyMatch(board::collidesLeftSide)) {
-            // Attempt wallkick on left wall
-            if (rotated.stream().map(Point::right).noneMatch(board::collidesLateral)) {
-                currentPiece.moveRight();
-            } else {
-                // Wallkick not possible, no rotation
-                return;
-            }
+            attemptLeftWallKick(rotated);
+            return;
         } else if (rotated.stream().anyMatch(board::collidesRightSide)) {
-            // Attempt wallkick on right wall
-            if (rotated.stream().map(Point::left).noneMatch(board::collidesLateral)) {
-                currentPiece.moveLeft();
-            } else {
-                // Wallkick not possible, no rotation
-                return;
-            }
+            attemptRightWallKick(rotated);
+            return;
         }
-
         currentPiece.rotateRight();
+    }
+
+    private void attemptRightWallKick(List<Point> rotated) {
+        if (rotated.stream().map(Point::left).noneMatch(board::collidesLateral)) {
+            currentPiece.moveLeft();
+            currentPiece.rotateRight();
+        }
+    }
+
+    private void attemptLeftWallKick(List<Point> rotated) {
+        if (rotated.stream().map(Point::right).noneMatch(board::collidesLateral)) {
+            currentPiece.moveRight();
+            currentPiece.rotateRight();
+        }
     }
 
     public void attemptMoveDown() {
