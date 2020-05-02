@@ -57,6 +57,7 @@ class GameLoop extends AnimationTimer {
     }
 
     private void paintItems() {
+        itemPainter.clearCanvas();
         itemPainter.drawItems(game.items());
     }
 
