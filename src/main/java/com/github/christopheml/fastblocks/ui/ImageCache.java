@@ -12,7 +12,7 @@ public class ImageCache {
     public Image load(String path, int width, int height) {
         String key = key(path, width, height);
         return images.computeIfAbsent(key,
-                k -> new Image(getClass().getResourceAsStream(path), width, height, true, false));
+                k -> new Image(getClass().getResourceAsStream("/images/" + path), width, height, true, false));
     }
 
     private String key(String path, int width, int height) {

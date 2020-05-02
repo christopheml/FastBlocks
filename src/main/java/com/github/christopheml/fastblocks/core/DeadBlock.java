@@ -12,7 +12,7 @@ public class DeadBlock implements Block {
 
     @Override
     public String image() {
-        return "/block.png";
+        return "block.png";
     }
 
     @Override
