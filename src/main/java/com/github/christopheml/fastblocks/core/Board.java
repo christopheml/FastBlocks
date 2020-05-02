@@ -1,9 +1,11 @@
 package com.github.christopheml.fastblocks.core;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import com.github.christopheml.fastblocks.core.blocks.Block;
+import com.github.christopheml.fastblocks.core.blocks.DeadBlock;
+import com.github.christopheml.fastblocks.core.blocks.ItemBlock;
+import com.github.christopheml.fastblocks.core.items.ItemType;
+
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -59,6 +61,14 @@ public class Board {
         return point.x < 0;
     }
 
+    public void spawnItems(int count) {
+        List<Block> blocks = getBlocks();
+        Collections.shuffle(blocks);
+        blocks.stream().limit(count).map(Block::position).forEach(p -> {
+            board.get(p.y)[p.x] = new ItemBlock(p, ItemType.random());
+        });
+    }
+
     public List<Block> getBlocks() {
         return board.stream().flatMap(Arrays::stream).filter(Objects::nonNull).collect(Collectors.toList());
     }
@@ -79,6 +89,10 @@ public class Board {
                     block.updateLine(line);
                 }
             }
+        }
+
+        if (removed > 1) {
+            spawnItems(removed);
         }
 
         return removed;

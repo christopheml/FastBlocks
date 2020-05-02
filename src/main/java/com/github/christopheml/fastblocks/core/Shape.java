@@ -1,5 +1,7 @@
 package com.github.christopheml.fastblocks.core;
 
+import com.github.christopheml.fastblocks.random.Rng;
+
 import java.util.List;
 import java.util.Random;
 
@@ -60,7 +62,7 @@ public enum Shape {
     }
 
     public static Shape random() {
-        return values()[rng.nextInt(values().length)];
+        return Rng.pick(Shape.class);
     }
 
     public List<Point[]> rotations() {

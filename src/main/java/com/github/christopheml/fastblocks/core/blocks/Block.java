@@ -1,38 +1,35 @@
-package com.github.christopheml.fastblocks.core;
+package com.github.christopheml.fastblocks.core.blocks;
 
-public class DeadBlock implements Block {
+import com.github.christopheml.fastblocks.core.Game;
+import com.github.christopheml.fastblocks.core.Point;
+
+public abstract class Block {
 
     private Point position;
-    private final String color;
 
-    public DeadBlock(Point position, String color) {
+    public Block(Point position) {
         this.position = position;
-        this.color = color;
     }
 
-    @Override
     public String image() {
         return "block.png";
     }
 
-    @Override
     public String color() {
-        return color;
+        return "";
     }
 
-    @Override
     public Point position() {
         return position;
     }
 
-    @Override
     public void destroy(Game game) {
-        // Do nothing
+        // Default behavior is doing nothing special
     }
 
-    @Override
     public void updateLine(int line) {
         position = Point.p(position.x, line);
     }
+
 
 }
