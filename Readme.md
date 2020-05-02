@@ -22,13 +22,17 @@ This project runs on Java 11. You can download one from [Adopt OpenJDK](https://
 
 * Support for sound effects
 
-### What's planned 
-
 * Line counting
+
+* Game over visual effect
+
+* Support for items/inventory
+
+### What's planned 
 
 * Additional visual effects
 
-* Special blocks
+* Implementation of all items
 
 * Event log
 
