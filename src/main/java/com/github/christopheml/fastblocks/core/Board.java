@@ -73,16 +73,21 @@ public class Board {
     }
 
     public int clearLines(Game game) {
-        var toDestroy = board.stream().filter(this::isFull).flatMap(Arrays::stream).collect(Collectors.toList());
+        var removedLines = board.stream().filter(this::isFull).collect(Collectors.toList());
+        var removedLinesCount = removedLines.size();
 
+        // Actually remove the lines
         board.removeIf(this::isFull);
-        var removed = LINES - board.size();
 
-        toDestroy.forEach(block -> block.destroy(game, removed));
+        // Block destroying logic
+        removedLines.stream().flatMap(Arrays::stream).forEach(block -> block.destroy(game, removedLinesCount));
 
+        // Fill up the board again
         while (board.size() < LINES) {
             board.add(0, new Block[COLUMNS]);
         }
+
+        // Actualize block coordinates
         for (var line = 0; line < LINES; ++line) {
             for (var i = 0; i < COLUMNS; ++i) {
                 var block = board.get(line)[i];
@@ -92,16 +97,11 @@ public class Board {
             }
         }
 
-        if (removed > 1) {
-            spawnItems(removed);
+        if (removedLinesCount > 1) {
+            spawnItems(removedLinesCount);
         }
 
-        return removed;
-    }
-
-    private void processDestroyedBlocks(Game game) {
-
-
+        return removedLinesCount;
     }
 
     private boolean isFull(Block[] line) {
