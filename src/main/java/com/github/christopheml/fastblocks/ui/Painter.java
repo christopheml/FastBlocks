@@ -2,6 +2,7 @@ package com.github.christopheml.fastblocks.ui;
 
 import com.github.christopheml.fastblocks.core.Board;
 import com.github.christopheml.fastblocks.core.Piece;
+import com.github.christopheml.fastblocks.core.items.ItemType;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -66,6 +67,17 @@ public class Painter {
             gc.setFill(Color.web(color));
             gc.fillRect(scaledX, scaledY, blockSize, blockSize);
         }
+    }
+
+    public void drawItems(Iterable<ItemType> items) {
+        var x = 0;
+        for (var item : items) {
+            var image = imageCache.load("/item" + item.letter + ".png", blockSize, blockSize);
+            gc.drawImage(image, x, 0);
+            x += blockSize;
+        }
+        gc.setFill(Color.web("#C0000080"));
+        gc.fillRect(0, 0, blockSize, blockSize);
     }
 
 }

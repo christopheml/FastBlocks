@@ -12,15 +12,17 @@ class GameLoop extends AnimationTimer {
 
     private final Game game;
     private final Painter painter;
+    private final Painter itemPainter;
     private final KeyHandler keyHandler;
 
     private final LoopTimer inputTimer = new LoopTimer(30);
     private final LoopTimer pieceGravityTimer = new LoopTimer(300);
     private final LoopTimer fillBoardTimer = new LoopTimer(80);
 
-    public GameLoop(Game game, Painter painter, KeyHandler keyHandler) {
+    public GameLoop(Game game, Painter painter, Painter itemPainter, KeyHandler keyHandler) {
         this.game = game;
         this.painter = painter;
+        this.itemPainter = itemPainter;
         this.keyHandler = keyHandler;
     }
 
@@ -50,7 +52,12 @@ class GameLoop extends AnimationTimer {
 
     private void paintFrame() {
         paintBoard();
+        paintItems();
         painter.drawPiece(game.currentPiece());
+    }
+
+    private void paintItems() {
+        itemPainter.drawItems(game.items());
     }
 
     private void paintBoard() {

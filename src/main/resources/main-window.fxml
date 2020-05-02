@@ -12,27 +12,25 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.github.christopheml.fastblocks.ui.controllers.MainUiController">
+<VBox prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.christopheml.fastblocks.ui.controllers.MainUiController">
     <children>
         <MenuBar VBox.vgrow="NEVER">
             <menus>
                 <Menu mnemonicParsing="false" text="Game">
                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#newGameAction" text="New Game"/>
-                        <MenuItem mnemonicParsing="false" onAction="#quitAction" text="Quit"/>
+                        <MenuItem mnemonicParsing="false" onAction="#newGameAction" text="New Game" />
+                        <MenuItem mnemonicParsing="false" onAction="#quitAction" text="Quit" />
                     </items>
                 </Menu>
             </menus>
         </MenuBar>
         <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
             <children>
-                <BorderPane prefHeight="600.0" prefWidth="640.0" AnchorPane.bottomAnchor="0.0"
-                            AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <BorderPane prefHeight="600.0" prefWidth="640.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <left>
                         <Canvas id="gameCanvas" height="528" width="288" BorderPane.alignment="CENTER">
                             <BorderPane.margin>
-                                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+                                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                             </BorderPane.margin>
                         </Canvas>
                     </left>
@@ -43,12 +41,12 @@
                                     <children>
                                         <Label text="Lignes : ">
                                             <font>
-                                                <Font name="Calibri" size="24.0"/>
+                                                <Font name="Calibri" size="24.0" />
                                             </font>
                                         </Label>
                                         <Label id="lineCounter" text="0">
                                             <font>
-                                                <Font name="Calibri Bold" size="24.0"/>
+                                                <Font name="Calibri Bold" size="24.0" />
                                             </font>
                                         </Label>
                                     </children>
@@ -56,6 +54,16 @@
                             </children>
                         </VBox>
                     </center>
+               <bottom>
+                  <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Canvas id="itemCanvas" height="20.0" width="400.0">
+                           <HBox.margin>
+                              <Insets bottom="20.0" left="20.0" right="20.0" />
+                           </HBox.margin></Canvas>
+                     </children>
+                  </HBox>
+               </bottom>
                 </BorderPane>
             </children>
         </AnchorPane>

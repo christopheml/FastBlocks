@@ -73,10 +73,12 @@ public class Board {
     }
 
     public int clearLines(Game game) {
-        processDestroyedBlocks(game);
+        var toDestroy = board.stream().filter(this::isFull).flatMap(Arrays::stream).collect(Collectors.toList());
 
         board.removeIf(this::isFull);
         var removed = LINES - board.size();
+
+        toDestroy.forEach(block -> block.destroy(game, removed));
 
         while (board.size() < LINES) {
             board.add(0, new Block[COLUMNS]);
@@ -98,8 +100,8 @@ public class Board {
     }
 
     private void processDestroyedBlocks(Game game) {
-        var toDestroy = board.stream().filter(this::isFull).flatMap(Arrays::stream).collect(Collectors.toList());
-        toDestroy.forEach(block -> block.destroy(game));
+
+
     }
 
     private boolean isFull(Block[] line) {

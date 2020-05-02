@@ -1,5 +1,6 @@
 package com.github.christopheml.fastblocks.core;
 
+import com.github.christopheml.fastblocks.core.items.ItemType;
 import com.github.christopheml.fastblocks.core.movement.Movement;
 import com.github.christopheml.fastblocks.ui.events.GameEvents;
 import com.github.christopheml.fastblocks.ui.events.board.LinesClearedEvent;
@@ -7,6 +8,8 @@ import com.github.christopheml.fastblocks.ui.events.game.GameStartEvent;
 import com.github.christopheml.fastblocks.ui.events.piece.PieceDroppedEvent;
 import com.github.christopheml.fastblocks.ui.events.piece.PieceRotatedEvent;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -23,6 +26,8 @@ public class Game {
     private final Movement movement;
 
     private Status status = Status.NOT_STARTED;
+
+    private List<ItemType> items = new ArrayList<>();
 
     public Game(GameEvents events) {
         this.events = events;
@@ -76,6 +81,7 @@ public class Game {
 
     public void start() {
         board.clear();
+        items.clear();
         status = Status.STARTED;
         spawnPiece();
         events.fireEvent(new GameStartEvent());
@@ -98,6 +104,16 @@ public class Game {
     public void clearLines() {
         var removedLines = board.clearLines(this);
         events.fireEvent(new LinesClearedEvent(removedLines));
+    }
+
+    public void gainItem(ItemType type) {
+        if (items.size() < 20) {
+            items.add(type);
+        }
+    }
+
+    public List<ItemType> items() {
+        return items;
     }
 
     public enum Status {

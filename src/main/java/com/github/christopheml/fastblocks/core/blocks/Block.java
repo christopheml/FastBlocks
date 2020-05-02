@@ -23,7 +23,7 @@ public abstract class Block {
         return position;
     }
 
-    public void destroy(Game game) {
+    public void destroy(Game game, int linesCleared) {
         // Default behavior is doing nothing special
     }
 
