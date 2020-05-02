@@ -53,8 +53,8 @@ public class Movement {
 
     public Outcome rotateRight(Piece piece) {
         var rotated = piece.tryRotation();
-        if (rotated.stream().anyMatch(board::isOccupied)) {
-            // Collision with pieces, no rotation
+        if (rotated.stream().anyMatch(board::collidesVerticalBottom)) {
+            // Collision with pieces or bottom, no rotation
             return Outcome.NOT_MOVED;
         }
         if (rotated.stream().anyMatch(board::collidesLeftSide)) {
