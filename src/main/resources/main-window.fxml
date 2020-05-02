@@ -57,7 +57,7 @@
                <bottom>
                   <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                      <children>
-                        <Canvas id="itemCanvas" height="20.0" width="400.0">
+                        <Canvas id="itemCanvas" height="48.0" width="288.0">
                            <HBox.margin>
                               <Insets bottom="20.0" left="20.0" right="20.0" />
                            </HBox.margin></Canvas>

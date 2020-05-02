@@ -11,6 +11,8 @@ import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
 
+import java.util.List;
+
 public class Painter {
 
     private final Canvas canvas;
@@ -69,15 +71,17 @@ public class Painter {
         }
     }
 
-    public void drawItems(Iterable<ItemType> items) {
-        var x = 0;
-        for (var item : items) {
-            var image = imageCache.load("/item" + item.letter + ".png", blockSize, blockSize);
-            gc.drawImage(image, x, 0);
-            x += blockSize;
+    public void drawItems(List<ItemType> items) {
+        for (var i = 0; i < items.size(); ++i) {
+            var x = (i % 12) * blockSize;
+            var y = (i / 12) * blockSize;
+            var image = imageCache.load("/item" + items.get(i).letter + ".png", blockSize, blockSize);
+            gc.drawImage(image, x, y);
         }
-        gc.setFill(Color.web("#C0000080"));
-        gc.fillRect(0, 0, blockSize, blockSize);
+        if (!items.isEmpty()) {
+            gc.setFill(Color.web("#C0000080"));
+            gc.fillRect(0, 0, blockSize, blockSize);
+        }
     }
 
 }

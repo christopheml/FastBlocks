@@ -63,7 +63,7 @@ public class FastBlocks extends Application {
         var painter = new Painter(canvas, 24);
 
         var itemCanvas = (Canvas) scene.lookup("#itemCanvas");
-        var itemPainter = new Painter(itemCanvas, 20);
+        var itemPainter = new Painter(itemCanvas, 24);
 
         AnimationTimer gameLoop = new GameLoop(game, painter, itemPainter, keyHandler);
         gameLoop.start();

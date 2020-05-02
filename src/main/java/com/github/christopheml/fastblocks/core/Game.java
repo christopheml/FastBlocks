@@ -107,7 +107,7 @@ public class Game {
     }
 
     public void gainItem(ItemType type) {
-        if (items.size() < 20) {
+        if (items.size() < 24) {
             items.add(type);
         }
     }
