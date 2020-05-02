@@ -1,7 +1,5 @@
 package com.github.christopheml.fastblocks.core;
 
-import com.github.christopheml.fastblocks.sound.SoundEffect;
-import com.github.christopheml.fastblocks.sound.SoundEffectPlayer;
 import com.github.christopheml.fastblocks.ui.events.GameEvents;
 import com.github.christopheml.fastblocks.ui.events.board.LinesClearedEvent;
 import com.github.christopheml.fastblocks.ui.events.game.GameStartEvent;
@@ -49,7 +47,7 @@ public class Game {
     }
 
     public void attemptRotateRight() {
-        List<Point> rotated = currentPiece.tryRotation();
+        var rotated = currentPiece.tryRotation();
         if (rotated.stream().anyMatch(board::isOccupied)) {
             // Collision with pieces, no rotation
             return;
@@ -134,12 +132,12 @@ public class Game {
     }
 
     public void clearLines() {
-        int removedLines = board.clearLines(this);
+        var removedLines = board.clearLines(this);
         events.fireEvent(new LinesClearedEvent(removedLines));
     }
 
     public enum Status {
-        NOT_STARTED, STARTED, LOST;
+        NOT_STARTED, STARTED, LOST
     }
 
 }

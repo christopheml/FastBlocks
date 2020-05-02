@@ -32,9 +32,9 @@ public class Painter {
         var block = imageCache.load("/block.png", blockSize, blockSize);
         gc.setFill(Color.web(piece.shape().color));
 
-        for (Point blockPosition : piece.blocksPositions()) {
-            int scaledX = blockPosition.x * blockSize;
-            int scaledY = blockPosition.y * blockSize;
+        for (var blockPosition : piece.blocksPositions()) {
+            var scaledX = blockPosition.x * blockSize;
+            var scaledY = blockPosition.y * blockSize;
             gc.drawImage(block, scaledX, scaledY);
             gc.fillRect(scaledX, scaledY, blockSize, blockSize);
         }
@@ -45,7 +45,7 @@ public class Painter {
     }
 
     public void drawBackground() {
-        Stop[] stops = new Stop[] { new Stop(0, Color.WHITE),
+        var stops = new Stop[] { new Stop(0, Color.WHITE),
                 new Stop(0.5, Color.LIGHTGRAY),
                 new Stop(1.0, Color.DARKGRAY)};
         var gradient = new LinearGradient(0, 0, 1, 1, true, CycleMethod.NO_CYCLE, stops);
@@ -54,15 +54,15 @@ public class Painter {
     }
 
     public void drawBoard(Board board) {
-        for (Block block : board.getBlocks()) {
+        for (var block : board.getBlocks()) {
             var image = imageCache.load(block.image(), blockSize, blockSize);
             drawBlock(block.position().x, block.position().y, image, block.color());
         }
     }
 
     private void drawBlock(int x, int y, Image image, String color) {
-        int scaledX = x * blockSize;
-        int scaledY = y * blockSize;
+        var scaledX = x * blockSize;
+        var scaledY = y * blockSize;
         gc.drawImage(image, scaledX, scaledY);
         if (!color.isEmpty()) {
             gc.setFill(Color.web(color));

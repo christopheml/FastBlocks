@@ -15,7 +15,7 @@ public class GameEvents {
 
     @SafeVarargs
     public final void registerListener(EventListener listener, Class<? extends Event>... eventClasses) {
-        for (Class<? extends Event> eventClass : eventClasses) {
+        for (var eventClass : eventClasses) {
             registerEvent(eventClass, listener);
         }
     }

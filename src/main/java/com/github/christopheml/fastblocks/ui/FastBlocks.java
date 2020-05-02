@@ -30,18 +30,18 @@ public class FastBlocks extends Application {
         var game = new Game(events);
         // TODO: handle game configuration here
 
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/main-window.fxml"));
+        var fxmlLoader = new FXMLLoader(getClass().getResource("/main-window.fxml"));
         fxmlLoader.setControllerFactory(new DependencyInjectionControllerFactory(game));
         Parent root = fxmlLoader.load();
 
-        Scene scene = new Scene(root, Color.WHITESMOKE);
+        var scene = new Scene(root, Color.WHITESMOKE);
 
         // Controllers
-        LineCountController lineCountController = new LineCountController(scene);
+        var lineCountController = new LineCountController(scene);
         events.registerListener(lineCountController, LinesClearedEvent.class, GameStartEvent.class);
 
-        SoundEffectPlayer soundEffectPlayer = new SoundEffectPlayer();
-        SoundController soundController = new SoundController(soundEffectPlayer);
+        var soundEffectPlayer = new SoundEffectPlayer();
+        var soundController = new SoundController(soundEffectPlayer);
         events.registerListener(soundController, LinesClearedEvent.class, PieceDroppedEvent.class, PieceRotatedEvent.class);
 
         scene.setOnKeyPressed(keyHandler);
@@ -52,7 +52,7 @@ public class FastBlocks extends Application {
         stage.show();
 
         var canvas = (Canvas) scene.lookup("#gameCanvas");
-        Painter painter = new Painter(canvas, 24);
+        var painter = new Painter(canvas, 24);
 
         AnimationTimer gameLoop = new GameLoop(game, painter, keyHandler);
         gameLoop.start();

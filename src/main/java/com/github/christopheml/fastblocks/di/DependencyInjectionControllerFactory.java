@@ -25,7 +25,7 @@ public class DependencyInjectionControllerFactory implements Callback<Class<?>, 
         try {
             // Basically, we look for a controller taking a single Game argument and call it with the Game object.
             // Otherwise, default to the default constructor.
-            for (Constructor<?> c : controllerType.getConstructors()) {
+            for (var c : controllerType.getConstructors()) {
                 if (c.getParameterCount() == 1) {
                     if (c.getParameterTypes()[0] == Game.class) {
                         return c.newInstance(game);

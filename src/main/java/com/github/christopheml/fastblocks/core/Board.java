@@ -19,7 +19,7 @@ public class Board {
     private final List<Block[]> board = new ArrayList<>();
 
     public Board() {
-        for (int i = 0; i < LINES; ++i) {
+        for (var i = 0; i < LINES; ++i) {
             board.add(new Block[COLUMNS]);
         }
     }
@@ -62,11 +62,10 @@ public class Board {
     }
 
     public void spawnItems(int count) {
-        List<Block> blocks = getBlocks();
+        var blocks = getBlocks();
         Collections.shuffle(blocks);
-        blocks.stream().limit(count).map(Block::position).forEach(p -> {
-            board.get(p.y)[p.x] = new ItemBlock(p, ItemType.random());
-        });
+        blocks.stream().limit(count).map(Block::position)
+                .forEach(p -> board.get(p.y)[p.x] = new ItemBlock(p, ItemType.random()));
     }
 
     public List<Block> getBlocks() {
@@ -77,14 +76,14 @@ public class Board {
         processDestroyedBlocks(game);
 
         board.removeIf(this::isFull);
-        int removed = LINES - board.size();
+        var removed = LINES - board.size();
 
         while (board.size() < LINES) {
             board.add(0, new Block[COLUMNS]);
         }
-        for (int line = 0; line < LINES; ++line) {
-            for (int i = 0; i < COLUMNS; ++i) {
-                Block block = board.get(line)[i];
+        for (var line = 0; line < LINES; ++line) {
+            for (var i = 0; i < COLUMNS; ++i) {
+                var block = board.get(line)[i];
                 if (block != null) {
                     block.updateLine(line);
                 }
@@ -99,7 +98,7 @@ public class Board {
     }
 
     private void processDestroyedBlocks(Game game) {
-        List<Block> toDestroy = board.stream().filter(this::isFull).flatMap(Arrays::stream).collect(Collectors.toList());
+        var toDestroy = board.stream().filter(this::isFull).flatMap(Arrays::stream).collect(Collectors.toList());
         toDestroy.forEach(block -> block.destroy(game));
     }
 
@@ -108,9 +107,7 @@ public class Board {
     }
 
     public void clear() {
-        board.forEach(line -> {
-            Arrays.fill(line, null);
-        });
+        board.forEach(line -> Arrays.fill(line, null));
     }
 
 }

@@ -12,10 +12,10 @@ import com.github.christopheml.fastblocks.core.Shape;
 public class BoardFiller {
 
     public static void fillBlocks(Board board, int blockCount) {
-        int filledBlocks = 0;
-        for (int y = Board.LINES - 1; y >= 0; --y) {
-            for (int x = 0; x < Board.COLUMNS; ++x) {
-                Point position = Point.p(x, y);
+        var filledBlocks = 0;
+        for (var y = Board.LINES - 1; y >= 0; --y) {
+            for (var x = 0; x < Board.COLUMNS; ++x) {
+                var position = Point.p(x, y);
                 if (!board.isOccupied(position)) {
                     board.fillBlock(position, Shape.random().color);
                     filledBlocks++;

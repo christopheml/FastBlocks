@@ -8,7 +8,7 @@ public class Rng {
     private static final Random random = new SecureRandom();
 
     public static <T extends Enum<?>> T pick(Class<T> enumClass){
-        int i = random.nextInt(enumClass.getEnumConstants().length);
+        var i = random.nextInt(enumClass.getEnumConstants().length);
         return enumClass.getEnumConstants()[i];
     }
 

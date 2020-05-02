@@ -9,7 +9,7 @@ public class SoundEffectPlayer {
     private final EnumMap<SoundEffect, AudioClip> effects = new EnumMap<>(SoundEffect.class);
 
     public SoundEffectPlayer() {
-        for (SoundEffect availableEffect : SoundEffect.values()) {
+        for (var availableEffect : SoundEffect.values()) {
             effects.put(availableEffect, new AudioClip(getClass().getResource("/sound/" + availableEffect.file).toExternalForm()));
         }
     }
