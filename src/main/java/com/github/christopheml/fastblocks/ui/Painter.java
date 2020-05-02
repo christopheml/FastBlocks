@@ -1,9 +1,7 @@
 package com.github.christopheml.fastblocks.ui;
 
-import com.github.christopheml.fastblocks.core.blocks.Block;
 import com.github.christopheml.fastblocks.core.Board;
 import com.github.christopheml.fastblocks.core.Piece;
-import com.github.christopheml.fastblocks.core.Point;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;

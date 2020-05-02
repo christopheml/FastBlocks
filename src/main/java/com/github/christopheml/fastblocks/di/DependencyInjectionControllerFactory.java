@@ -3,8 +3,6 @@ package com.github.christopheml.fastblocks.di;
 import com.github.christopheml.fastblocks.core.Game;
 import javafx.util.Callback;
 
-import java.lang.reflect.Constructor;
-
 /**
  * Instantiates FXML controllers and injects the game object in those aware of it.
  *

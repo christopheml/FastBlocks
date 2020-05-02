@@ -7,7 +7,6 @@ import com.github.christopheml.fastblocks.ui.events.game.GameStartEvent;
 import com.github.christopheml.fastblocks.ui.events.piece.PieceDroppedEvent;
 import com.github.christopheml.fastblocks.ui.events.piece.PieceRotatedEvent;
 
-import java.util.List;
 import java.util.Random;
 
 /**

@@ -98,7 +98,7 @@ public class Movement {
         /**
          * Piece couldn't move and should be locked (i.e. hit something at the bottom)
          */
-        LOCKED;
+        LOCKED
     }
 
 }
