@@ -40,6 +40,7 @@ class GameLoop extends AnimationTimer {
                 break;
             }
             case LOST: {
+                keyHandler.flush();
                 fillBoardTimer.runOnInterval(now, () -> BoardFiller.fillBlocks(game.board(), 10));
                 paintBoard();
                 break;
