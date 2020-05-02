@@ -19,7 +19,7 @@ public class ItemActions {
     }
 
     public void clearLine() {
-
+        game.board().clearLine();
     }
 
     public void nukeField() {

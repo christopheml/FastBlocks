@@ -9,6 +9,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static java.util.Collections.singletonList;
+
 /**
  * Represents the content of the board.
  */
@@ -139,6 +141,12 @@ public class Board {
     public void specialBlockClear() {
         board.stream().flatMap(Arrays::stream).filter(block -> block instanceof ItemBlock).map(Block::position)
                 .forEach(p -> board.get(p.y)[p.x] = new DeadBlock(p, Shape.random().color));
+    }
+
+    public void clearLine() {
+        deleteLines(singletonList(LINES - 1));
+        board.add(0, new Block[COLUMNS]);
+        updateBlockCoordinates();
     }
 
 }
