@@ -88,6 +88,16 @@ public class Board {
         }
 
         // Actualize block coordinates
+        updateBlockCoordinates();
+
+        if (removedLinesCount > 1) {
+            spawnItems(removedLinesCount);
+        }
+
+        return removedLinesCount;
+    }
+
+    private void updateBlockCoordinates() {
         for (var line = 0; line < LINES; ++line) {
             for (var i = 0; i < COLUMNS; ++i) {
                 var block = board.get(line)[i];
@@ -96,12 +106,6 @@ public class Board {
                 }
             }
         }
-
-        if (removedLinesCount > 1) {
-            spawnItems(removedLinesCount);
-        }
-
-        return removedLinesCount;
     }
 
     private boolean isFull(Block[] line) {
