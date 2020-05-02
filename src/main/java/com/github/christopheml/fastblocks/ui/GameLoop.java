@@ -35,7 +35,7 @@ class GameLoop extends AnimationTimer {
         switch (game.status()) {
             case STARTED: {
                 inputTimer.runOnInterval(now, this::handleInput);
-                pieceGravityTimer.runOnInterval(now, game::attemptMoveDown);
+                pieceGravityTimer.runOnInterval(now, game::moveDown);
                 paintFrame();
                 break;
             }
@@ -50,18 +50,18 @@ class GameLoop extends AnimationTimer {
 
     private void handleInput() {
         if (keyHandler.isSpacePressed()) {
-            game.attemptDrop();
+            game.drop();
         }
         if (keyHandler.isLeftPressed()) {
-            game.attemptMoveLeft();
+            game.moveLeft();
         } else if (keyHandler.isRightPressed()) {
-            game.attemptMoveRight();
+            game.moveRight();
         }
         if (keyHandler.isDownPressed()) {
-            game.attemptMoveDown();
+            game.moveDown();
         }
         if (keyHandler.isUpPressed()) {
-            game.attemptRotateRight();
+            game.rotateRight();
         }
         keyHandler.flush();
     }

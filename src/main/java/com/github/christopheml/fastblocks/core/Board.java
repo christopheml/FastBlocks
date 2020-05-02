@@ -45,19 +45,19 @@ public class Board {
         return point.y < 0 || isOccupied(point);
     }
 
-    boolean collidesVerticalBottom(Point point) {
+    public boolean collidesVerticalBottom(Point point) {
         return point.y >= LINES || isOccupied(point);
     }
 
-    boolean collidesLateral(Point point) {
+    public boolean collidesLateral(Point point) {
         return collidesLeftSide(point) || collidesRightSide(point) || isOccupied(point);
     }
 
-    boolean collidesRightSide(Point point) {
+    public boolean collidesRightSide(Point point) {
         return point.x >= COLUMNS;
     }
 
-    boolean collidesLeftSide(Point point) {
+    public boolean collidesLeftSide(Point point) {
         return point.x < 0;
     }
 

@@ -1,5 +1,6 @@
 package com.github.christopheml.fastblocks.core;
 
+import com.github.christopheml.fastblocks.core.movement.Movement;
 import com.github.christopheml.fastblocks.ui.events.GameEvents;
 import com.github.christopheml.fastblocks.ui.events.board.LinesClearedEvent;
 import com.github.christopheml.fastblocks.ui.events.game.GameStartEvent;
@@ -18,83 +19,51 @@ public class Game {
 
     private Piece currentPiece;
 
-    private final Board board = new Board();
+    private final Board board;
+
+    private final Movement movement;
 
     private Status status = Status.NOT_STARTED;
 
     public Game(GameEvents events) {
         this.events = events;
+        board = new Board();
+        movement = new Movement(board);
     }
 
     private void spawnPiece() {
         currentPiece = new Piece(Shape.random(), new Random().nextInt(5) + 4, 0);
     }
 
-    public void attemptMoveLeft() {
-        if (currentPiece.blocksPositions().stream()
-                .map(Point::left)
-                .noneMatch(board::collidesLateral)) {
-            currentPiece.moveLeft();
+    public void moveLeft() {
+        movement.left(currentPiece);
+    }
+
+    public void moveRight() {
+        movement.right(currentPiece);
+    }
+
+    public void rotateRight() {
+        if (movement.rotateRight(currentPiece) == Movement.Outcome.MOVED) {
+            events.fireEvent(new PieceRotatedEvent());
         }
     }
 
-    public void attemptMoveRight() {
-        if (currentPiece.blocksPositions().stream()
-                .map(Point::right)
-                .noneMatch(board::collidesLateral)) {
-            currentPiece.moveRight();
+    public void moveDown() {
+        var outcome = movement.down(currentPiece);
+        if (outcome == Movement.Outcome.LOCKED) {
+            lockPiece();
         }
     }
 
-    public void attemptRotateRight() {
-        var rotated = currentPiece.tryRotation();
-        if (rotated.stream().anyMatch(board::isOccupied)) {
-            // Collision with pieces, no rotation
-            return;
-        }
-        if (rotated.stream().anyMatch(board::collidesLeftSide)) {
-            attemptLeftWallKick(rotated);
-            return;
-        } else if (rotated.stream().anyMatch(board::collidesRightSide)) {
-            attemptRightWallKick(rotated);
-            return;
-        }
-        rotateRight();
-    }
+    private void lockPiece() {
+        board.lock(currentPiece);
+        clearLines();
+        spawnPiece();
 
-    private void attemptRightWallKick(List<Point> rotated) {
-        if (rotated.stream().map(Point::left).noneMatch(board::collidesLateral)) {
-            currentPiece.moveLeft();
-            rotateRight();
-        }
-    }
-
-    private void attemptLeftWallKick(List<Point> rotated) {
-        if (rotated.stream().map(Point::right).noneMatch(board::collidesLateral)) {
-            currentPiece.moveRight();
-            rotateRight();
-        }
-    }
-
-    private void rotateRight() {
-        currentPiece.rotateRight();
-        events.fireEvent(new PieceRotatedEvent());
-    }
-
-    public void attemptMoveDown() {
-        if (currentPiece.blocksPositions().stream()
-                .map(Point::down)
-                .noneMatch(board::collidesVerticalBottom)) {
-            currentPiece.moveDown();
-        } else {
-            board.lock(currentPiece);
-            clearLines();
-            spawnPiece();
-
-            // if spawned piece hits anything upon spawning, game over
-            if (currentPiece.blocksPositions().stream().anyMatch(board::collidesVerticalTop)) {
-                lose();
-            }
+        // if spawned piece hits anything upon spawning, game over
+        if (currentPiece.blocksPositions().stream().anyMatch(board::collidesVerticalTop)) {
+            lose();
         }
     }
 
@@ -121,13 +90,9 @@ public class Game {
         return status;
     }
 
-    public void attemptDrop() {
-        while (currentPiece.blocksPositions().stream()
-                .map(Point::down)
-                .noneMatch(board::collidesVerticalBottom)) {
-            currentPiece.moveDown();
-        }
-        attemptMoveDown();
+    public void drop() {
+        movement.drop(currentPiece);
+        lockPiece();
         events.fireEvent(new PieceDroppedEvent());
     }
 
