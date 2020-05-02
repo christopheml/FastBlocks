@@ -1,5 +1,6 @@
 package com.github.christopheml.fastblocks.core;
 
+import com.github.christopheml.fastblocks.core.items.ItemActions;
 import com.github.christopheml.fastblocks.core.items.ItemType;
 import com.github.christopheml.fastblocks.core.movement.Movement;
 import com.github.christopheml.fastblocks.ui.events.GameEvents;
@@ -27,12 +28,15 @@ public class Game {
 
     private Status status = Status.NOT_STARTED;
 
-    private List<ItemType> items = new ArrayList<>();
+    private final List<ItemType> items = new ArrayList<>();
+
+    private final ItemActions itemActions;
 
     public Game(GameEvents events) {
         this.events = events;
         board = new Board();
         movement = new Movement(board);
+        itemActions = new ItemActions(this);
     }
 
     private void spawnPiece() {
@@ -109,6 +113,24 @@ public class Game {
     public void gainItem(ItemType type) {
         if (items.size() < 24) {
             items.add(type);
+        }
+    }
+
+    public void useItemOnSelf() {
+        var item = items.remove(0);
+        switch (item) {
+            case CLEAR_LINE:
+                itemActions.clearLine();
+                break;
+            case NUKE_FIELD:
+                itemActions.nukeField();
+                break;
+            case RANDOM_BLOCK_CLEAR:
+                itemActions.randomBlockClear();
+                break;
+            case SPECIAL_BLOCK_CLEAR:
+                itemActions.specialBlockClear();
+                break;
         }
     }
 

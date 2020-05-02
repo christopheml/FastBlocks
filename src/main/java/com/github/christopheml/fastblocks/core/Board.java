@@ -112,4 +112,9 @@ public class Board {
         board.forEach(line -> Arrays.fill(line, null));
     }
 
+    public void specialBlockClear() {
+        board.stream().flatMap(Arrays::stream).filter(block -> block instanceof ItemBlock).map(Block::position)
+                .forEach(p -> board.get(p.y)[p.x] = new DeadBlock(p, Shape.random().color));
+    }
+
 }

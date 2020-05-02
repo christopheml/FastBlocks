@@ -54,6 +54,7 @@ public class FastBlocks extends Application {
         keyHandler.register(KeyCode.RIGHT, game::moveRight, 1, false);
         keyHandler.register(KeyCode.DOWN, game::moveDown, 2, false);
         keyHandler.register(KeyCode.UP, game::rotateRight, 3, false);
+        keyHandler.register(KeyCode.E, game::useItemOnSelf, 1, false);
 
         stage.setTitle("FastBlocks");
         stage.setScene(scene);
