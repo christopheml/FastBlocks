@@ -43,12 +43,11 @@ public class Movement {
         }
     }
 
-    public Outcome drop(Piece piece) {
+    public void drop(Piece piece) {
         var outcome = Outcome.MOVED;
         do {
             outcome = down(piece);
         } while (outcome != Outcome.LOCKED);
-        return Outcome.LOCKED;
     }
 
     public Outcome rotateRight(Piece piece) {
