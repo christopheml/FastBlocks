@@ -117,6 +117,9 @@ public class Game {
     }
 
     public void useItemOnSelf() {
+        if (items.isEmpty()) {
+            return;
+        }
         var item = items.remove(0);
         switch (item) {
             case CLEAR_LINE:
