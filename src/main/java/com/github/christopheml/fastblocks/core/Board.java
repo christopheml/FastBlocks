@@ -7,6 +7,7 @@ import com.github.christopheml.fastblocks.core.items.ItemType;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * Represents the content of the board.
@@ -73,28 +74,47 @@ public class Board {
     }
 
     public int clearLines(Game game) {
-        var removedLines = board.stream().filter(this::isFull).collect(Collectors.toList());
-        var removedLinesCount = removedLines.size();
+        var fullLinesNumbers = IntStream.range(0, LINES)
+                .filter(i -> isFull(board.get(i))).boxed().collect(Collectors.toList());
 
-        // Actually remove the lines
-        board.removeIf(this::isFull);
+        var removedLinesCount = fullLinesNumbers.size();
 
-        // Block destroying logic
-        removedLines.stream().flatMap(Arrays::stream).forEach(block -> block.destroy(game, removedLinesCount));
+        var deletedBlocks = deleteLines(fullLinesNumbers);
 
-        // Fill up the board again
-        while (board.size() < LINES) {
+        fullLinesNumbers.forEach(i -> {
             board.add(0, new Block[COLUMNS]);
-        }
+        });
 
-        // Actualize block coordinates
         updateBlockCoordinates();
+
+        extractItems(game, deletedBlocks, removedLinesCount);
 
         if (removedLinesCount > 1) {
             spawnItems(removedLinesCount);
         }
 
         return removedLinesCount;
+    }
+
+    private void extractItems(Game game, List<Block> deletedBlocks, int removedLinesCount) {
+        List<ItemType> items = new ArrayList<>();
+        deletedBlocks.stream()
+                .filter(block -> block instanceof ItemBlock)
+                .map(block -> ((ItemBlock) block).type)
+                .forEach(item -> {
+                    for (var i = 0; i < removedLinesCount; i++) {
+                        items.add(item);
+                    }
+                });
+        Collections.shuffle(items);
+        items.forEach(game::gainItem);
+    }
+
+    private List<Block> deleteLines(List<Integer> lineNumbers) {
+        var deletedBlocks = lineNumbers.stream().map(board::get).flatMap(Arrays::stream).collect(Collectors.toList());
+        lineNumbers.sort(Comparator.reverseOrder());
+        lineNumbers.forEach(i -> board.remove(i.intValue()));
+        return deletedBlocks;
     }
 
     private void updateBlockCoordinates() {

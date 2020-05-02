@@ -1,6 +1,5 @@
 package com.github.christopheml.fastblocks.core.blocks;
 
-import com.github.christopheml.fastblocks.core.Game;
 import com.github.christopheml.fastblocks.core.Point;
 
 public abstract class Block {
@@ -21,10 +20,6 @@ public abstract class Block {
 
     public Point position() {
         return position;
-    }
-
-    public void destroy(Game game, int linesCleared) {
-        // Default behavior is doing nothing special
     }
 
     public void updateLine(int line) {
