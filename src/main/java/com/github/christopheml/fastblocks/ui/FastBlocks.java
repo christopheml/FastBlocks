@@ -17,6 +17,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -46,6 +47,13 @@ public class FastBlocks extends Application {
 
         scene.setOnKeyPressed(keyHandler);
         scene.setOnKeyReleased(keyHandler);
+
+        // Register keys
+        keyHandler.register(KeyCode.SPACE, game::drop, 0, true);
+        keyHandler.register(KeyCode.LEFT, game::moveLeft, 1, false);
+        keyHandler.register(KeyCode.RIGHT, game::moveRight, 1, false);
+        keyHandler.register(KeyCode.DOWN, game::moveDown, 2, false);
+        keyHandler.register(KeyCode.UP, game::rotateRight, 3, false);
 
         stage.setTitle("FastBlocks");
         stage.setScene(scene);
