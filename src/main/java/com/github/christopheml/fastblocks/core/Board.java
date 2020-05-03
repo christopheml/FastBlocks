@@ -3,6 +3,7 @@ package com.github.christopheml.fastblocks.core;
 import com.github.christopheml.fastblocks.core.blocks.Block;
 import com.github.christopheml.fastblocks.core.blocks.DeadBlock;
 import com.github.christopheml.fastblocks.core.blocks.ItemBlock;
+import com.github.christopheml.fastblocks.core.board.Line;
 import com.github.christopheml.fastblocks.core.items.ItemType;
 import com.github.christopheml.fastblocks.random.Rng;
 
@@ -20,11 +21,11 @@ public class Board {
     public static final int COLUMNS = 12;
     public static final int LINES = 22;
 
-    private final List<Block[]> board = new ArrayList<>();
+    private final List<Line> board = new ArrayList<>();
 
     public Board() {
         for (var i = 0; i < LINES; ++i) {
-            board.add(new Block[COLUMNS]);
+            board.add(Line.empty());
         }
     }
 
@@ -34,7 +35,7 @@ public class Board {
 
     public void fillBlock(Point position, String color) {
         if (!isOccupied(position)) {
-            board.get(position.y)[position.x] = new DeadBlock(position, color);
+            board.get(position.y).fillBlock(position.x, new DeadBlock(position, color));
         }
     }
 
@@ -42,7 +43,7 @@ public class Board {
         if (collidesLeftSide(p) || collidesRightSide(p) || p.y < 0 || p.y >= LINES) {
             return false;
         }
-        return board.get(p.y)[p.x] != null;
+        return board.get(p.y).isOccupied(p.x);
     }
 
     boolean collidesVerticalTop(Point point) {
@@ -69,26 +70,26 @@ public class Board {
         var blocks = getBlocks();
         Collections.shuffle(blocks);
         blocks.stream().limit(count).map(Block::position)
-                .forEach(p -> board.get(p.y)[p.x] = new ItemBlock(p, ItemType.random()));
+                .forEach(p -> board.get(p.y).fillBlock(p.x, new ItemBlock(p, ItemType.random())));
     }
 
     public List<Block> getBlocks() {
-        return board.stream().flatMap(Arrays::stream).filter(Objects::nonNull).collect(Collectors.toList());
+        return board.stream().flatMap(Line::toBlockStream).filter(Objects::nonNull).collect(Collectors.toList());
     }
 
     public int clearLines(Game game) {
         var fullLinesNumbers = IntStream.range(0, LINES)
-                .filter(i -> isFull(board.get(i))).boxed().collect(Collectors.toList());
+                .filter(i -> board.get(i).isFull()).boxed().collect(Collectors.toList());
 
         var removedLinesCount = fullLinesNumbers.size();
 
         var deletedBlocks = deleteLines(fullLinesNumbers);
 
         fullLinesNumbers.forEach(i -> {
-            board.add(0, new Block[COLUMNS]);
+            board.add(0, Line.empty());
         });
 
-        updateBlockCoordinates();
+        updateBlockHeight();
 
         extractItems(game, deletedBlocks, removedLinesCount);
 
@@ -114,45 +115,36 @@ public class Board {
     }
 
     private List<Block> deleteLines(List<Integer> lineNumbers) {
-        var deletedBlocks = lineNumbers.stream().map(board::get).flatMap(Arrays::stream).collect(Collectors.toList());
+        var deletedBlocks = lineNumbers.stream().map(board::get).flatMap(Line::toBlockStream).collect(Collectors.toList());
         lineNumbers.sort(Comparator.reverseOrder());
         lineNumbers.forEach(i -> board.remove(i.intValue()));
         return deletedBlocks;
     }
 
-    private void updateBlockCoordinates() {
-        for (var line = 0; line < LINES; ++line) {
-            for (var i = 0; i < COLUMNS; ++i) {
-                var block = board.get(line)[i];
-                if (block != null) {
-                    block.updateLine(line);
-                }
-            }
+    private void updateBlockHeight() {
+        for (var lineHeight = 0; lineHeight < LINES; ++lineHeight) {
+            board.get(lineHeight).updateBlockHeight(lineHeight);
         }
     }
 
-    private boolean isFull(Block[] line) {
-        return Arrays.stream(line).noneMatch(Objects::isNull);
-    }
-
     public void clear() {
-        board.forEach(line -> Arrays.fill(line, null));
+        board.forEach(Line::clear);
     }
 
     public void specialBlockClear() {
-        board.stream().flatMap(Arrays::stream).filter(block -> block instanceof ItemBlock).map(Block::position)
-                .forEach(p -> board.get(p.y)[p.x] = new DeadBlock(p, Shape.random().color));
+        board.stream().flatMap(Line::toBlockStream).filter(block -> block instanceof ItemBlock).map(Block::position)
+                .forEach(p -> board.get(p.y).fillBlock(p.x, new DeadBlock(p, Shape.random().color)));
     }
 
     public void clearLine() {
         deleteLines(singletonList(LINES - 1));
-        board.add(0, new Block[COLUMNS]);
-        updateBlockCoordinates();
+        board.add(0, Line.empty());
+        updateBlockHeight();
     }
 
     public void randomBlockClear() {
         for (var i = 0; i < 10; i++) {
-            board.get(Rng.nextInt(LINES))[Rng.nextInt(COLUMNS)] = null;
+            board.get(Rng.nextInt(LINES)).clearBlock(Rng.nextInt(COLUMNS));
         }
     }
 

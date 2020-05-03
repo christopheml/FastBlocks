@@ -22,7 +22,7 @@ public abstract class Block {
         return position;
     }
 
-    public void updateLine(int line) {
+    public void updateHeight(int line) {
         position = Point.p(position.x, line);
     }
 
