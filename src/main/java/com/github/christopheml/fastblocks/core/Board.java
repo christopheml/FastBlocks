@@ -4,6 +4,7 @@ import com.github.christopheml.fastblocks.core.blocks.Block;
 import com.github.christopheml.fastblocks.core.blocks.DeadBlock;
 import com.github.christopheml.fastblocks.core.blocks.ItemBlock;
 import com.github.christopheml.fastblocks.core.items.ItemType;
+import com.github.christopheml.fastblocks.random.Rng;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -147,6 +148,12 @@ public class Board {
         deleteLines(singletonList(LINES - 1));
         board.add(0, new Block[COLUMNS]);
         updateBlockCoordinates();
+    }
+
+    public void randomBlockClear() {
+        for (var i = 0; i < 10; i++) {
+            board.get(Rng.nextInt(LINES))[Rng.nextInt(COLUMNS)] = null;
+        }
     }
 
 }

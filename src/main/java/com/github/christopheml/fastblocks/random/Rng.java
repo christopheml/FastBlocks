@@ -12,4 +12,8 @@ public class Rng {
         return enumClass.getEnumConstants()[i];
     }
 
+    public static int nextInt(int bound) {
+        return random.nextInt(bound);
+    }
+
 }

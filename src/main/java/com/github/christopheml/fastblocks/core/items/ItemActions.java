@@ -27,7 +27,7 @@ public class ItemActions {
     }
 
     public void randomBlockClear() {
-
+        game.board().randomBlockClear();
     }
 
 }
