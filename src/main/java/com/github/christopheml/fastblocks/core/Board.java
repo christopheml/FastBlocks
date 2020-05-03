@@ -5,7 +5,6 @@ import com.github.christopheml.fastblocks.core.blocks.DeadBlock;
 import com.github.christopheml.fastblocks.core.blocks.ItemBlock;
 import com.github.christopheml.fastblocks.core.board.Line;
 import com.github.christopheml.fastblocks.core.items.ItemType;
-import com.github.christopheml.fastblocks.random.Rng;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -74,6 +73,10 @@ public class Board {
                 .forEach(p -> board.get(p.y).fillBlock(p.x, new ItemBlock(p, ItemType.random())));
     }
 
+    public Line line(int index) {
+        return board.get(index);
+    }
+
     public List<Block> getBlocks() {
         return stream().filter(Objects::nonNull).collect(Collectors.toList());
     }
@@ -132,21 +135,10 @@ public class Board {
         board.forEach(Line::clear);
     }
 
-    public void specialBlockClear() {
-        stream().filter(block -> block instanceof ItemBlock).map(Block::position)
-                .forEach(p -> board.get(p.y).fillBlock(p.x, new DeadBlock(p, Shape.random().color)));
-    }
-
     public void clearLine() {
         deleteLines(singletonList(LINES - 1));
         board.add(0, Line.empty());
         updateBlockHeight();
-    }
-
-    public void randomBlockClear() {
-        for (var i = 0; i < 10; i++) {
-            board.get(Rng.nextInt(LINES)).clearBlock(Rng.nextInt(COLUMNS));
-        }
     }
 
     public Stream<Block> stream() {

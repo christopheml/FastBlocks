@@ -1,6 +1,12 @@
 package com.github.christopheml.fastblocks.core.items;
 
+import com.github.christopheml.fastblocks.core.Board;
 import com.github.christopheml.fastblocks.core.Game;
+import com.github.christopheml.fastblocks.core.Shape;
+import com.github.christopheml.fastblocks.core.blocks.Block;
+import com.github.christopheml.fastblocks.core.blocks.DeadBlock;
+import com.github.christopheml.fastblocks.core.blocks.ItemBlock;
+import com.github.christopheml.fastblocks.random.Rng;
 
 
 /**
@@ -15,7 +21,8 @@ public class ItemActions {
     }
 
     public void specialBlockClear() {
-        game.board().specialBlockClear();
+        game.board().stream().filter(block -> block instanceof ItemBlock).map(Block::position)
+                .forEach(p -> game.board().line(p.y).fillBlock(p.x, new DeadBlock(p, Shape.random().color)));
     }
 
     public void clearLine() {
@@ -27,7 +34,9 @@ public class ItemActions {
     }
 
     public void randomBlockClear() {
-        game.board().randomBlockClear();
+        for (var i = 0; i < 10; i++) {
+            game.board().line(Rng.nextInt(Board.LINES)).clearBlock(Rng.nextInt(Board.COLUMNS));
+        }
     }
 
 }
