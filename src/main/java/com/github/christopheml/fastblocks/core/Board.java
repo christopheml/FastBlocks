@@ -10,6 +10,7 @@ import com.github.christopheml.fastblocks.random.Rng;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import static java.util.Collections.singletonList;
 
@@ -74,7 +75,7 @@ public class Board {
     }
 
     public List<Block> getBlocks() {
-        return board.stream().flatMap(Line::toBlockStream).filter(Objects::nonNull).collect(Collectors.toList());
+        return stream().filter(Objects::nonNull).collect(Collectors.toList());
     }
 
     public int clearLines(Game game) {
@@ -132,7 +133,7 @@ public class Board {
     }
 
     public void specialBlockClear() {
-        board.stream().flatMap(Line::toBlockStream).filter(block -> block instanceof ItemBlock).map(Block::position)
+        stream().filter(block -> block instanceof ItemBlock).map(Block::position)
                 .forEach(p -> board.get(p.y).fillBlock(p.x, new DeadBlock(p, Shape.random().color)));
     }
 
@@ -146,6 +147,10 @@ public class Board {
         for (var i = 0; i < 10; i++) {
             board.get(Rng.nextInt(LINES)).clearBlock(Rng.nextInt(COLUMNS));
         }
+    }
+
+    public Stream<Block> stream() {
+        return board.stream().flatMap(Line::toBlockStream);
     }
 
 }
