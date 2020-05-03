@@ -145,4 +145,10 @@ public class Board {
         return board.stream().flatMap(Line::toBlockStream);
     }
 
+    public void addGarbageLine() {
+        board.remove(0);
+        board.add(LINES - 1, Line.garbage());
+        updateBlockHeight();
+    }
+
 }

@@ -1,7 +1,11 @@
 package com.github.christopheml.fastblocks.core.board;
 
 import com.github.christopheml.fastblocks.core.Board;
+import com.github.christopheml.fastblocks.core.Point;
+import com.github.christopheml.fastblocks.core.Shape;
 import com.github.christopheml.fastblocks.core.blocks.Block;
+import com.github.christopheml.fastblocks.core.blocks.DeadBlock;
+import com.github.christopheml.fastblocks.random.Rng;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -48,6 +52,19 @@ public class Line {
 
     public static Line empty() {
         return new Line();
+    }
+
+    public static Line garbage() {
+        var line = new Line();
+        for (var i = 0; i < Board.COLUMNS; i++) {
+            if (Rng.nextBoolean()) {
+                line.fillBlock(i, new DeadBlock(Point.p(i, 0), Rng.pick(Shape.class).color));
+            }
+        }
+        if (line.isFull()) {
+            line.clearBlock(Rng.nextInt(Board.COLUMNS));
+        }
+        return line;
     }
 
 }

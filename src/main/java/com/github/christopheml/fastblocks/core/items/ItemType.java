@@ -7,7 +7,8 @@ public enum ItemType {
     SPECIAL_BLOCK_CLEAR('B'),
     CLEAR_LINE('C'),
     NUKE_FIELD('N'),
-    RANDOM_BLOCK_CLEAR('R');
+    RANDOM_BLOCK_CLEAR('R'),
+    ADD_LINE('A');
 
     public final char letter;
 

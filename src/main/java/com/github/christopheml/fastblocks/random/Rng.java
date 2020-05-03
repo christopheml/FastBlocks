@@ -16,4 +16,7 @@ public class Rng {
         return random.nextInt(bound);
     }
 
+    public static boolean nextBoolean() {
+        return random.nextBoolean();
+    }
 }

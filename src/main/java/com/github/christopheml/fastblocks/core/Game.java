@@ -134,6 +134,9 @@ public class Game {
             case SPECIAL_BLOCK_CLEAR:
                 itemActions.specialBlockClear();
                 break;
+            case ADD_LINE:
+                itemActions.addGarbageLine();
+                break;
         }
     }
 

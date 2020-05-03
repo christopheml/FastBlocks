@@ -39,4 +39,8 @@ public class ItemActions {
         }
     }
 
+    public void addGarbageLine() {
+        game.board().addGarbageLine();
+    }
+
 }
