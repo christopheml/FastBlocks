@@ -7,6 +7,7 @@ import com.github.christopheml.fastblocks.core.events.game.GameStartEvent;
 import com.github.christopheml.fastblocks.core.events.piece.PieceDroppedEvent;
 import com.github.christopheml.fastblocks.core.events.piece.PieceRotatedEvent;
 import com.github.christopheml.fastblocks.di.DependencyInjectionControllerFactory;
+import com.github.christopheml.fastblocks.inputs.DefaultKeybinds;
 import com.github.christopheml.fastblocks.inputs.KeyHandler;
 import com.github.christopheml.fastblocks.sound.SoundEffectPlayer;
 import com.github.christopheml.fastblocks.ui.controllers.LineCountController;
@@ -17,7 +18,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -45,16 +45,7 @@ public class FastBlocks extends Application {
         var soundController = new SoundController(soundEffectPlayer);
         events.registerListener(soundController, LinesClearedEvent.class, PieceDroppedEvent.class, PieceRotatedEvent.class);
 
-        scene.setOnKeyPressed(keyHandler);
-        scene.setOnKeyReleased(keyHandler);
-
-        // Register keys
-        keyHandler.register(KeyCode.SPACE, game::drop, 0, true);
-        keyHandler.register(KeyCode.LEFT, game::moveLeft, 1, false);
-        keyHandler.register(KeyCode.RIGHT, game::moveRight, 1, false);
-        keyHandler.register(KeyCode.DOWN, game::moveDown, 2, false);
-        keyHandler.register(KeyCode.UP, game::rotateRight, 3, false);
-        keyHandler.register(KeyCode.E, game::useItemOnSelf, 1, false);
+        setupKeyboard(game, scene);
 
         stage.setTitle("FastBlocks");
         stage.setScene(scene);
@@ -68,6 +59,13 @@ public class FastBlocks extends Application {
 
         AnimationTimer gameLoop = new GameLoop(game, painter, itemPainter, keyHandler);
         gameLoop.start();
+    }
+
+    private void setupKeyboard(Game game, Scene scene) {
+        scene.setOnKeyPressed(keyHandler);
+        scene.setOnKeyReleased(keyHandler);
+
+        DefaultKeybinds.applyTo(game, keyHandler);
     }
 
     public static void main(String[] args) {
