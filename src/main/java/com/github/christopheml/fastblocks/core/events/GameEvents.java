@@ -1,4 +1,4 @@
-package com.github.christopheml.fastblocks.ui.events;
+package com.github.christopheml.fastblocks.core.events;
 
 import java.util.HashMap;
 import java.util.HashSet;

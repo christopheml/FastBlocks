@@ -1,12 +1,12 @@
 package com.github.christopheml.fastblocks.ui.controllers;
 
+import com.github.christopheml.fastblocks.core.events.board.BoardEventListener;
+import com.github.christopheml.fastblocks.core.events.board.LinesClearedEvent;
+import com.github.christopheml.fastblocks.core.events.piece.PieceDroppedEvent;
+import com.github.christopheml.fastblocks.core.events.piece.PieceEventListener;
+import com.github.christopheml.fastblocks.core.events.piece.PieceRotatedEvent;
 import com.github.christopheml.fastblocks.sound.SoundEffect;
 import com.github.christopheml.fastblocks.sound.SoundEffectPlayer;
-import com.github.christopheml.fastblocks.ui.events.board.BoardEventListener;
-import com.github.christopheml.fastblocks.ui.events.board.LinesClearedEvent;
-import com.github.christopheml.fastblocks.ui.events.piece.PieceDroppedEvent;
-import com.github.christopheml.fastblocks.ui.events.piece.PieceEventListener;
-import com.github.christopheml.fastblocks.ui.events.piece.PieceRotatedEvent;
 
 public class SoundController implements BoardEventListener, PieceEventListener {
 

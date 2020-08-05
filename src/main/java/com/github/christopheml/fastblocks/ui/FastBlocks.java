@@ -1,16 +1,16 @@
 package com.github.christopheml.fastblocks.ui;
 
 import com.github.christopheml.fastblocks.core.Game;
+import com.github.christopheml.fastblocks.core.events.GameEvents;
+import com.github.christopheml.fastblocks.core.events.board.LinesClearedEvent;
+import com.github.christopheml.fastblocks.core.events.game.GameStartEvent;
+import com.github.christopheml.fastblocks.core.events.piece.PieceDroppedEvent;
+import com.github.christopheml.fastblocks.core.events.piece.PieceRotatedEvent;
 import com.github.christopheml.fastblocks.di.DependencyInjectionControllerFactory;
 import com.github.christopheml.fastblocks.inputs.KeyHandler;
 import com.github.christopheml.fastblocks.sound.SoundEffectPlayer;
 import com.github.christopheml.fastblocks.ui.controllers.LineCountController;
 import com.github.christopheml.fastblocks.ui.controllers.SoundController;
-import com.github.christopheml.fastblocks.ui.events.GameEvents;
-import com.github.christopheml.fastblocks.ui.events.board.LinesClearedEvent;
-import com.github.christopheml.fastblocks.ui.events.game.GameStartEvent;
-import com.github.christopheml.fastblocks.ui.events.piece.PieceDroppedEvent;
-import com.github.christopheml.fastblocks.ui.events.piece.PieceRotatedEvent;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

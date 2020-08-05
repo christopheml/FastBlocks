@@ -1,9 +1,9 @@
 package com.github.christopheml.fastblocks.ui.controllers;
 
-import com.github.christopheml.fastblocks.ui.events.board.BoardEventListener;
-import com.github.christopheml.fastblocks.ui.events.board.LinesClearedEvent;
-import com.github.christopheml.fastblocks.ui.events.game.GameEventListener;
-import com.github.christopheml.fastblocks.ui.events.game.GameStartEvent;
+import com.github.christopheml.fastblocks.core.events.board.BoardEventListener;
+import com.github.christopheml.fastblocks.core.events.board.LinesClearedEvent;
+import com.github.christopheml.fastblocks.core.events.game.GameEventListener;
+import com.github.christopheml.fastblocks.core.events.game.GameStartEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 

@@ -1,13 +1,13 @@
 package com.github.christopheml.fastblocks.core;
 
+import com.github.christopheml.fastblocks.core.events.GameEvents;
+import com.github.christopheml.fastblocks.core.events.board.LinesClearedEvent;
+import com.github.christopheml.fastblocks.core.events.game.GameStartEvent;
+import com.github.christopheml.fastblocks.core.events.piece.PieceDroppedEvent;
+import com.github.christopheml.fastblocks.core.events.piece.PieceRotatedEvent;
 import com.github.christopheml.fastblocks.core.items.ItemActions;
 import com.github.christopheml.fastblocks.core.items.ItemType;
 import com.github.christopheml.fastblocks.core.movement.Movement;
-import com.github.christopheml.fastblocks.ui.events.GameEvents;
-import com.github.christopheml.fastblocks.ui.events.board.LinesClearedEvent;
-import com.github.christopheml.fastblocks.ui.events.game.GameStartEvent;
-import com.github.christopheml.fastblocks.ui.events.piece.PieceDroppedEvent;
-import com.github.christopheml.fastblocks.ui.events.piece.PieceRotatedEvent;
 
 import java.util.ArrayList;
 import java.util.List;

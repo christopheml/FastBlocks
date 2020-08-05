@@ -1,6 +1,6 @@
-package com.github.christopheml.fastblocks.ui.events.piece;
+package com.github.christopheml.fastblocks.core.events.piece;
 
-import com.github.christopheml.fastblocks.ui.events.EventListener;
+import com.github.christopheml.fastblocks.core.events.EventListener;
 
 public interface PieceEventListener extends EventListener {
 

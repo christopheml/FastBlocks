@@ -1,7 +1,7 @@
-package com.github.christopheml.fastblocks.ui.events.board;
+package com.github.christopheml.fastblocks.core.events.board;
 
-import com.github.christopheml.fastblocks.ui.events.Event;
-import com.github.christopheml.fastblocks.ui.events.EventListener;
+import com.github.christopheml.fastblocks.core.events.Event;
+import com.github.christopheml.fastblocks.core.events.EventListener;
 
 public class LinesClearedEvent extends Event {
 
